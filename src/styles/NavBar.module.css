@@ -8,15 +8,16 @@
     top: 0;
     display: flex;
     justify-content: center;
-    padding-top: 10px;
+    margin-top: 1em;
 }
 
 .logo {
     font-size: 3em;
-    border: 2px solid blueviolet;
+    border: 1px solid blueviolet;
     border-radius: 8px;
     color: blueviolet;
     rotate: -20deg;
+    padding: 2px 0;
 }
 
 .nav-items-wrapper {

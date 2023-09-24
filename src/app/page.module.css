@@ -1,0 +1,34 @@
+.home-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.filter-component,
+.articles-component {
+    height: 100%;
+}
+
+.filter-component {
+    width: 16.25em;
+    background-color: #F8F8FB;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.filter-main {
+    margin-top: 50px;
+}
+
+.filter-item-heading {
+    cursor: pointer;
+    padding-bottom: 1em;
+}
+
+.articles-component {
+    width: 100%;
+    padding: 0 1em;
+}

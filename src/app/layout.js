@@ -11,7 +11,9 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className} ${raleway.className}`}>
         <div className={'page'}>
           <NavBar />
-          {children}
+          <div className={'content'}>
+            {children}
+          </div>
         </div>
       </body>
     </html>
