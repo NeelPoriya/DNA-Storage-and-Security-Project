@@ -1,5 +1,6 @@
 import Header from '@/components/Header'
 import styles from './page.module.css'
+import { AiOutlineSearch } from 'react-icons/ai';
 
 export default function Home() {
   return (
@@ -17,6 +18,18 @@ export default function Home() {
       </div>
       <div className={styles['articles-component']}>
         <Header />
+        <div className={styles['search-component']}>
+          <div className={styles['search-icon-wrapper']}>
+            <AiOutlineSearch className={styles['search-icon']} />
+          </div>
+          <div className={styles['search-input-wrapper']}>
+            <input
+              type='text'
+              placeholder='New Codec Algorithms'
+              className={styles['search-input']}
+            ></input>
+          </div>
+        </div>
       </div>
     </div >
   )
