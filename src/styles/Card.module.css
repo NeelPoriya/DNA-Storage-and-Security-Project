@@ -1,0 +1,58 @@
+.card-component {
+    user-select: none;
+    width: 85%;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border-radius: .25em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.card-component:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card-component:hover>.card-link>.card-details>.card-title {
+    text-decoration: underline;
+}
+
+.card-link {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.card-image {
+    width: 100%;
+    height: 15em;
+    object-fit: cover;
+    border-radius: .23em;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .5em;
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.card-author {
+    margin-top: .3em;
+    font-weight: 500;
+}
+
+.card-date {}
