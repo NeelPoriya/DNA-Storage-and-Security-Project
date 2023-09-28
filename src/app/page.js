@@ -19,12 +19,19 @@ export default function Home() {
   }
 
   let newDetails = {
-    type: "Articles And Papers",
-    source: "Oxford Academics",
+    // heading
     title: "Fractal construction of constrained code words for DNA storage systems",
+
+    // high priority
+    source: "Oxford Academics",
+    type: "Articles And Papers",
     topics: "Codeword, Storage",
+
+    // low priority
     authors: "Hannah F L\u00f6chel, Marius Welzel, Georges Hattab, Anne-Christin, Hauschild, Dominik Heider",
     publishedDate: "15 December 2021",
+
+    // link
     link: "https://doi.org/10.1093/nar/gkab1209"
   }
 
