@@ -73,6 +73,7 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSources, setSelectedSources] = useState([]);
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
 
   useEffect(() => {
     for (let i = 0; i < 111; ++i) {
@@ -86,20 +87,31 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    setNewData(prev => data.filter((item) => {
-      if (selectedSources.includes(item.source)) return true;
-      return false;
-    }))
-  }, [selectedSources, data]);
+    const nData = data.filter((item) => {
+      let firstTest = selectedSources.length === 0;
+      if (selectedSources.length !== 0)
+        firstTest = selectedSources.includes(item.source);
+
+      let secondTest = selectedAuthors.length === 0;
+      item.authors.split(',').forEach((author) => {
+        if (selectedAuthors.includes(author)) secondTest = true;
+      });
+
+      return firstTest && secondTest;
+    });
+
+    setNewData(nData);
+  }, [selectedSources, selectedAuthors, data]);
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
 
-    if (newData.length !== 0)
-      return newData.slice(firstPageIndex, lastPageIndex);
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, newData, data]);
+    // check if no filters are applied
+    if (isAnyFilterApplied(selectedSources, selectedAuthors))
+      return data.slice(firstPageIndex, lastPageIndex);
+    return newData.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, newData, data, selectedSources, selectedAuthors]);
 
 
   return (
@@ -109,6 +121,7 @@ export default function Home() {
           data={details}
           selectedSources={selectedSources}
           setSelectedSources={setSelectedSources}
+          setSelectedAuthors={setSelectedAuthors}
         />
       </div>
       <div className={styles['articles-component']}>
@@ -134,7 +147,7 @@ export default function Home() {
               className="pagination-bar"
               currentPage={currentPage}
               totalCount={
-                newData.length === 0 ?
+                isAnyFilterApplied(selectedSources, selectedAuthors) ?
                   data.length : newData.length
               }
               pageSize={PageSize}
@@ -146,3 +159,7 @@ export default function Home() {
     </div >
   )
 }
+function isAnyFilterApplied(selectedSources, selectedAuthors) {
+  return selectedSources.length === 0 && selectedAuthors.length === 0;
+}
+

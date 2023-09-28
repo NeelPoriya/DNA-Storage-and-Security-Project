@@ -21,17 +21,20 @@
     margin-top: .5em;
 }
 
-.filter-source-dropdown-content {
+.filter-source-dropdown-content,
+.filter-author-dropdown-content {
     display: flex;
     flex-direction: column;
 }
 
-.filter-source-dropdown-item {
+.filter-source-dropdown-item,
+.filter-author-dropdown-item {
     display: flex;
     margin-top: 0.4em;
 }
 
-.filter-source-dropdown-item-text {
+.filter-source-dropdown-item-text,
+.filter-author-dropdown-item-text {
     font-size: 0.8em;
     padding-left: .5em;
 }
