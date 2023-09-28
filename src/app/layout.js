@@ -1,3 +1,4 @@
+'use client'
 import NavBar from '@/components/NavBar'
 import './globals.css'
 import { Inter, Raleway } from 'next/font/google'
