@@ -10,7 +10,6 @@ const Card = ({ details }) => {
 
     return (
         <>
-
             <div onClick={() => setShow(true)} className={styles['card-component']}>
                 <div className={styles['card-image-wrapper']}>
                     <Image src={'/paper.jpg'} width={1954} height={3006} className={styles['card-image']} alt='random image' />
@@ -21,11 +20,9 @@ const Card = ({ details }) => {
                     </div>
                     <div className={styles['card-bottom']}>
                         <div className={styles['card-author']}>
-                            {details.author.map((author, idx) => {
+                            {details.authors.split(',').map((author, idx) => {
                                 if (idx > 2) return;
-                                return (<div key={idx} className={styles['card-author-item']}>
-                                    {author}
-                                </div>);
+                                return <div key={idx} className={styles['card-author-item']}> {author} </div>;
                             }
                             )}
                         </div>

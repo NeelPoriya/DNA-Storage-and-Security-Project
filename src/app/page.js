@@ -18,10 +18,20 @@ export default function Home() {
     publishedDate: new Date()
   }
 
+  let newDetails = {
+    type: "Articles And Papers",
+    source: "Oxford Academics",
+    title: "Fractal construction of constrained code words for DNA storage systems",
+    topics: "Codeword, Storage",
+    authors: "Hannah F L\u00f6chel, Marius Welzel, Georges Hattab, Anne-Christin, Hauschild, Dominik Heider",
+    publishedDate: "15 December 2021",
+    link: "https://doi.org/10.1093/nar/gkab1209"
+  }
+
   const data = [];
 
   for (let i = 0; i < 100; ++i) {
-    data.push(<Card key={i} details={details} />);
+    data.push(<Card key={i} details={newDetails} />);
   }
 
   const [currentPage, setCurrentPage] = useState(1);
