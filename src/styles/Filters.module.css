@@ -1,0 +1,37 @@
+.filter-heading {
+    font-size: 1.2em;
+    font-weight: 800;
+}
+
+.filter-main {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-source,
+.filter-author,
+.filter-published-date,
+.filter-topic,
+.filter-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: .5em;
+}
+
+.filter-source-dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-source-dropdown-item {
+    display: flex;
+    margin-top: 0.4em;
+}
+
+.filter-source-dropdown-item-text {
+    font-size: 0.8em;
+    padding-left: .5em;
+}

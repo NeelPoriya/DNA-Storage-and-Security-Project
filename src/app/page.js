@@ -6,6 +6,7 @@ import Card from '@/components/Card';
 import { useEffect, useMemo, useState } from 'react';
 import Pagination from '@/components/Pagination';
 import Model from '@/components/Model';
+import Filters from '@/components/Filters';
 
 const PageSize = 12;
 
@@ -66,32 +67,49 @@ const details = [
 ]
 
 export default function Home() {
-  const data = [];
-  for (let i = 0; i < 100; ++i) {
-    data.push(<Card key={i} details={details[Math.floor(Math.random() * details.length)]} />);
-  }
+  const [data, setData] = useState([]);
+  // create a new data from the original data with extracted sources
+  let [newData, setNewData] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSources, setSelectedSources] = useState([]);
+
+  useEffect(() => {
+    for (let i = 0; i < 111; ++i) {
+      setData(prev =>
+        [
+          ...prev,
+          details[Math.floor(Math.random() * details.length)]
+        ]
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    setNewData(prev => data.filter((item) => {
+      if (selectedSources.includes(item.source)) return true;
+      return false;
+    }))
+  }, [selectedSources, data]);
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
+
+    if (newData.length !== 0)
+      return newData.slice(firstPageIndex, lastPageIndex);
     return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+  }, [currentPage, newData, data]);
 
 
   return (
     <div className={styles['home-page']}>
       <div className={styles['filter-component']}>
-        <h2 className={styles['filter-heading']}>
-          Filters
-        </h2>
-        <div className={styles['filter-main']}>
-          <h3 className={styles['filter-item-heading']}>University</h3>
-          <h3 className={styles['filter-item-heading']}>Author</h3>
-          <h3 className={styles['filter-item-heading']}>Published Date</h3>
-          <h3 className={styles['filter-item-heading']}>Title</h3>
-        </div>
+        <Filters
+          data={details}
+          selectedSources={selectedSources}
+          setSelectedSources={setSelectedSources}
+        />
       </div>
       <div className={styles['articles-component']}>
         <Header />
@@ -109,13 +127,16 @@ export default function Home() {
         </div>
         <div className={styles['articles-wrapper']}>
           <div className={styles['articles-main']}>
-            {currentTableData.map(card => card)}
+            {currentTableData.map((cardDetails, idx) => <Card key={idx} details={cardDetails} />)}
           </div>
           <div className={styles['articles-pagination']}>
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={data.length}
+              totalCount={
+                newData.length === 0 ?
+                  data.length : newData.length
+              }
               pageSize={PageSize}
               onPageChange={page => setCurrentPage(page)}
             />

@@ -14,7 +14,7 @@
 
 .model-content {
     background-color: white;
-    width: 60%;
+    width: 50%;
     height: 60%;
     z-index: 11;
     border-radius: 1em;
@@ -24,7 +24,7 @@
 }
 
 .model-left {
-    width: 40%;
+    width: 50%;
     border-right: 1px solid grey;
 }
 
@@ -39,7 +39,7 @@
     flex-direction: column;
     justify-content: space-between;
 
-    width: 60%;
+    width: 50%;
 }
 
 .model-button-wrapper {
@@ -86,7 +86,8 @@
 }
 
 .close-button:hover {
-    background-color: rgba(128, 128, 128, 0.274);
+    background-color: rgb(255, 75, 75);
+    color: white;
     border-radius: 50%;
 }
 
