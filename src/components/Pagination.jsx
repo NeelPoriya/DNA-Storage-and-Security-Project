@@ -1,5 +1,6 @@
 import { DOTS, usePagination } from '@/hooks/usePagination';
 import styles from './../styles/Pagination.module.css';
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from 'react-icons/bs';
 
 const Pagination = (props) => {
     const { onPageChange, totalCount, siblingCount, currentPage, pageSize } = props;
@@ -17,10 +18,12 @@ const Pagination = (props) => {
     }
 
     const onNext = () => {
+        if (currentPage === paginationRange.length) return;
         onPageChange(currentPage + 1);
     }
 
     const onPrevious = () => {
+        if (currentPage === 1) return;
         onPageChange(currentPage - 1);
     }
 
@@ -32,21 +35,25 @@ const Pagination = (props) => {
                 className={styles['pagination-item']}
                 onClick={onPrevious}
             >
-                <div className={`${styles["arrow"]} ${styles['left']}"]`} />
+                <div className={`${styles["arrow"]} ${styles['left']}`} >
+                    <BsFillCaretLeftFill />
+                </div>
             </li>
 
-            {paginationRange.map(pageNumber => {
+            {paginationRange.map((pageNumber, idx) => {
 
                 // If the pageItem is a DOT, render the DOTS unicode character
                 if (pageNumber === DOTS) {
-                    return <li key={pageNumber} className={`${styles["pagination-item"]} ${styles['dots']}"]`}>&#8230;</li>;
+                    return <li key={idx} className={`${styles["pagination-item"]}`}>
+                        <div className={styles['dots']}>...</div>
+                    </li>;
                 }
 
                 // Render our Page Pills
                 return (
                     <li
-                        key={pageNumber}
-                        className={styles['pagination-item']}
+                        key={idx}
+                        className={`${styles['pagination-item']} ${styles['text']} ${currentPage === pageNumber ? styles['active'] : ''}`}
                         onClick={() => onPageChange(pageNumber)}
                     >
                         {pageNumber}
@@ -58,7 +65,9 @@ const Pagination = (props) => {
                 className={styles['pagination-item']}
                 onClick={onNext}
             >
-                <div className={`${styles["arrow"]} ${styles['right']}"]`} />
+                <div className={`${styles["arrow"]} ${styles['right']}`} >
+                    <BsFillCaretRightFill />
+                </div>
             </li>
         </ul>
     )

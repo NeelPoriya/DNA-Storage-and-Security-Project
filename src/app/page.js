@@ -5,28 +5,24 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import Card from '@/components/Card';
 import { useEffect, useMemo, useState } from 'react';
 import Pagination from '@/components/Pagination';
+import Model from '@/components/Model';
 
-const PageSize = 8;
+const PageSize = 12;
 
 export default function Home() {
 
-  const data = [
-    <Card key="1" />,
-    <Card key="2" />,
-    <Card key="3" />,
-    <Card key="4" />,
-    <Card key="5" />,
-    <Card key="6" />,
-    <Card key="7" />,
-    <Card key="8" />,
-    <Card key="9" />,
-    <Card key="10" />,
-    <Card key="11" />,
-    <Card key="12" />,
-    <Card key="13" />,
-    <Card key="14" />,
-    <Card key="15" />,
-  ];
+  let details = {
+    title: 'DNA Storage and Security Security Security Security Security',
+    description: 'A very few paper have achieved the level of professionalism this paper has achieved.',
+    author: ['Arthur Morgan', 'Sadie Adler', 'John Marston', 'Abigel Marston'],
+    publishedDate: new Date()
+  }
+
+  const data = [];
+
+  for (let i = 0; i < 100; ++i) {
+    data.push(<Card key={i} details={details} />);
+  }
 
   const [currentPage, setCurrentPage] = useState(1);
 
