@@ -9,19 +9,25 @@ import Model from '@/components/Model';
 
 const PageSize = 12;
 
-export default function Home() {
+let detailsSample = {
+  // heading
+  title: "Fractal construction of constrained code words for DNA storage systems",
+  // high priority
+  source: "Oxford Academics",
+  type: "Articles And Papers",
+  topics: "Codeword, Storage",
 
-  let details = {
-    title: 'DNA Storage and Security Security Security Security Security',
-    description: 'A very few paper have achieved the level of professionalism this paper has achieved.',
-    author: ['Arthur Morgan', 'Sadie Adler', 'John Marston', 'Abigel Marston'],
-    publishedDate: new Date()
-  }
+  // low priority
+  authors: "Hannah F L\u00f6chel, Marius Welzel, Georges Hattab, Anne-Christin, Hauschild, Dominik Heider",
+  publishedDate: "15 December 2021",
 
-  let newDetails = {
-    // heading
+  // link
+  link: "https://doi.org/10.1093/nar/gkab1209"
+};
+
+const details = [
+  {
     title: "Fractal construction of constrained code words for DNA storage systems",
-
     // high priority
     source: "Oxford Academics",
     type: "Articles And Papers",
@@ -33,12 +39,41 @@ export default function Home() {
 
     // link
     link: "https://doi.org/10.1093/nar/gkab1209"
+  },
+  {
+    title: "Sometimes, I feel like I'm talking to a wall",
+    source: "DA-IICT",
+    type: "Conference Paper",
+    topics: "WordCode, DNA storage",
+    authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann",
+    publishedDate: "24 January 2023",
+    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  },
+  {
+    title: "Small Title",
+    source: "Large Source - Very large source",
+    type: "Not so good paper",
+    topics: "WordCode, DNA storage, large topic, very large topic, super-duper large topic",
+    authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann, a very long name, a very-very long name indeed",
+    publishedDate: "01 October 2023",
+    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  },
+
+  {
+    title: "Medium Title - Medium Title - Medium Title",
+    source: "Small institute",
+    type: "Youtube Channel",
+    topics: "WordCode, Influencer",
+    authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann",
+    publishedDate: "10 March 2023",
+    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   }
+]
 
+export default function Home() {
   const data = [];
-
   for (let i = 0; i < 100; ++i) {
-    data.push(<Card key={i} details={newDetails} />);
+    data.push(<Card key={i} details={details[Math.floor(Math.random() * details.length)]} />);
   }
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,10 +84,6 @@ export default function Home() {
     return data.slice(firstPageIndex, lastPageIndex);
   }, [currentPage]);
 
-
-  useEffect(() => {
-
-  });
 
   return (
     <div className={styles['home-page']}>
