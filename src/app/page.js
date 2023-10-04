@@ -7,6 +7,8 @@ import { useEffect, useMemo, useState } from 'react';
 import Pagination from '@/components/Pagination';
 import Model from '@/components/Model';
 import Filters from '@/components/Filters';
+import Image from 'next/image';
+import { CircularProgress } from '@mui/material';
 
 const PageSize = 12;
 
@@ -70,20 +72,28 @@ export default function Home() {
   const [data, setData] = useState([]);
   // create a new data from the original data with extracted sources
   let [newData, setNewData] = useState([]);
+  const [isFilterApplied, setIsFilterApplied] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSources, setSelectedSources] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
 
+  // fetch data from api
   useEffect(() => {
-    for (let i = 0; i < 111; ++i) {
-      setData(prev =>
-        [
-          ...prev,
-          details[Math.floor(Math.random() * details.length)]
-        ]
-      );
-    }
+    // for (let i = 0; i < 111; ++i) {
+    //   setData(prev =>
+    //     [
+    //       ...prev,
+    //       details[Math.floor(Math.random() * details.length)]
+    //     ]
+    //   );
+    // }
+    fetch('/api/article-papers')
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+      })
+      .catch(err => console.log(err));
   }, []);
 
   useEffect(() => {
@@ -101,6 +111,7 @@ export default function Home() {
     });
 
     setNewData(nData);
+    setIsFilterApplied(isAnyFilterApplied(selectedSources, selectedAuthors));
   }, [selectedSources, selectedAuthors, data]);
 
   const currentTableData = useMemo(() => {
@@ -139,9 +150,23 @@ export default function Home() {
           </div>
         </div>
         <div className={styles['articles-wrapper']}>
-          <div className={styles['articles-main']}>
-            {currentTableData.map((cardDetails, idx) => <Card key={idx} details={cardDetails} />)}
-          </div>
+          {
+            !isFilterApplied ?
+              <div className={styles['loading']}>
+                <CircularProgress color='inherit' />
+              </div>
+              :
+              currentTableData.length === 0 ?
+                <div className={styles['no-results']}>
+                  <Image className={styles['not-found-image']} src={'/not-found.svg'} width={1000} height={1000} alt={'404'}></Image>
+                  <h1>No Results Found</h1>
+                  <p>Try different keywords or remove filters</p>
+                </div>
+                :
+                <div className={styles['articles-main']}>
+                  {currentTableData.map((cardDetails, idx) => <Card key={idx} details={cardDetails} />)}
+                </div>
+          }
           <div className={styles['articles-pagination']}>
             <Pagination
               className="pagination-bar"
