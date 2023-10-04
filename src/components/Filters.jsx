@@ -5,8 +5,8 @@ import { useState } from 'react';
 const extractSourcesDate = (data) => {
     let sources = [];
     data.forEach((item) => {
-        if (sources.includes(item.source)) return;
-        sources.push(item.source);
+        if (sources.includes(item.Source)) return;
+        sources.push(item.Source);
     })
     return sources;
 }
@@ -14,7 +14,7 @@ const extractSourcesDate = (data) => {
 const extractAuthors = (data) => {
     let authors = [];
     data.forEach((item) => {
-        item.authors.split(',').forEach((author) => {
+        item.Authors.split(',').forEach((author) => {
             if (authors.includes(author)) return;
             authors.push(author);
         })
@@ -80,55 +80,55 @@ const Filters = ({ data, selectedSources, setSelectedSources, setSelectedAuthors
                         </div>
                         : ''
                 }
-            </div>
-            <div className={styles['filter-author']} onClick={toggleAuthors}>
-                <h3 className={styles['filter-author-heading']}>Auhtors</h3>
-                <div className={styles['filter-author-dropdown']}>
-                    {showAuthors ? <AiOutlineDown /> : <AiOutlineRight />}
-                </div>
-            </div>
-            {
-                showAuthors ?
-                    <div className={styles['filter-author-dropdown-content']}>
-                        {
-                            extractedAuthors.map((author, idx) => {
-                                return (
-                                    <div key={idx} className={styles['filter-author-dropdown-item']} >
-                                        <input type='checkbox' className={styles['filter-author-dropdown-item-checkbox']}
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setSelectedAuthors(prev => [...prev, author]);
-                                                } else {
-                                                    setSelectedAuthors(prev => prev.filter(item => item !== author));
-                                                }
-                                            }}
-                                        />
-                                        <div className={styles['filter-author-dropdown-item-text']}>
-                                            {author}
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                <div className={styles['filter-author']} onClick={toggleAuthors}>
+                    <h3 className={styles['filter-author-heading']}>Auhtors</h3>
+                    <div className={styles['filter-author-dropdown']}>
+                        {showAuthors ? <AiOutlineDown /> : <AiOutlineRight />}
                     </div>
-                    : ''
-            }
-            <div className={styles['filter-published-date']} onClick={togglePublishedDate}>
-                <h3 className={styles['filter-published-date-heading']}>Published Date</h3>
-                <div className={styles['filter-published-date-dropdown']}>
-                    {showPublishedDate ? <AiOutlineDown /> : <AiOutlineRight />}
                 </div>
-            </div>
-            <div className={styles['filter-topic']} onClick={toggleTopic}>
-                <h3 className={styles['filter-topic-heading']}>Topics</h3>
-                <div className={styles['filter-topic-dropdown']}>
-                    {showTopic ? <AiOutlineDown /> : <AiOutlineRight />}
+                {
+                    showAuthors ?
+                        <div className={styles['filter-author-dropdown-content']}>
+                            {
+                                extractedAuthors.map((author, idx) => {
+                                    return (
+                                        <div key={idx} className={styles['filter-author-dropdown-item']} >
+                                            <input type='checkbox' className={styles['filter-author-dropdown-item-checkbox']}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setSelectedAuthors(prev => [...prev, author]);
+                                                    } else {
+                                                        setSelectedAuthors(prev => prev.filter(item => item !== author));
+                                                    }
+                                                }}
+                                            />
+                                            <div className={styles['filter-author-dropdown-item-text']}>
+                                                {author}
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        : ''
+                }
+                <div className={styles['filter-published-date']} onClick={togglePublishedDate}>
+                    <h3 className={styles['filter-published-date-heading']}>Published Date</h3>
+                    <div className={styles['filter-published-date-dropdown']}>
+                        {showPublishedDate ? <AiOutlineDown /> : <AiOutlineRight />}
+                    </div>
                 </div>
-            </div>
-            <div className={styles['filter-type']} onClick={toggleType}>
-                <h3 className={styles['filter-type-heading']}>Type</h3>
-                <div className={styles['filter-type-dropdown']}>
-                    {showType ? <AiOutlineDown /> : <AiOutlineRight />}
+                <div className={styles['filter-topic']} onClick={toggleTopic}>
+                    <h3 className={styles['filter-topic-heading']}>Topics</h3>
+                    <div className={styles['filter-topic-dropdown']}>
+                        {showTopic ? <AiOutlineDown /> : <AiOutlineRight />}
+                    </div>
+                </div>
+                <div className={styles['filter-type']} onClick={toggleType}>
+                    <h3 className={styles['filter-type-heading']}>Type</h3>
+                    <div className={styles['filter-type-dropdown']}>
+                        {showType ? <AiOutlineDown /> : <AiOutlineRight />}
+                    </div>
                 </div>
             </div>
         </>

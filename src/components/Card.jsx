@@ -16,11 +16,11 @@ const Card = ({ details }) => {
                 </div>
                 <div className={styles['card-details']}>
                     <div className={styles['card-title']}>
-                        {details.title.slice(0, 50)}{details.title.length > 50 ? '...' : ''}
+                        {details.Title.slice(0, 50)}{details.Title.length > 50 ? '...' : ''}
                     </div>
                     <div className={styles['card-bottom']}>
                         <div className={styles['card-author']}>
-                            {details.authors.split(',').map((author, idx) => {
+                            {details.Authors.split(',').map((author, idx) => {
                                 if (idx > 2) return;
                                 return <div key={idx} className={styles['card-author-item']}> {author} </div>;
                             }
@@ -28,9 +28,9 @@ const Card = ({ details }) => {
                         </div>
                         <div className={styles['card-date']}>
                             {
-                                typeof (details.publishedDate.toISOString) == 'function' ?
-                                    details.publishedDate.toDateString().split(' ').slice(1).join(' ') :
-                                    details.publishedDate.toString()
+                                typeof (details['Published Date'].toISOString) == 'function' ?
+                                    details['Published Date'].toDateString().split(' ').slice(1).join(' ') :
+                                    details['Published Date'].toString()
                             }
                         </div>
                     </div>

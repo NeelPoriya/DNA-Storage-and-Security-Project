@@ -8,6 +8,11 @@
 
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+}
+
+.filter-main::-webkit-scrollbar {
+    display: none;
 }
 
 .filter-source,

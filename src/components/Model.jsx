@@ -23,22 +23,22 @@ const Model = ({ setShow, details }) => {
                             <AiOutlineClose />
                         </div>
                         <div className={styles['model-heading']}>
-                            {details.title}
+                            {details.Title}
                         </div>
 
                         <div className={styles['model-priority-high']}>
                             <div className={styles['model-source']}>
-                                Source: <b>{details.source}</b>
+                                Source: <b>{details.Source}</b>
                             </div>
                             <div className={styles['model-type']}>
-                                Type: <b>{details.type}</b>
+                                Type: <b>{details.Type}</b>
                             </div>
                             <div className={styles['model-topics']}>
                                 <div className={styles['model-topic-text']}>
                                     Topics:
                                 </div>
                                 <ul className={styles['model-topic-list']}>
-                                    {details.topics.split(',').map(
+                                    {details.Topics.split(',').map(
                                         (topic, idx) => <li key={idx} className={styles['model-topic-list-item']}>{topic}</li>
                                     )}
                                 </ul>
@@ -50,19 +50,19 @@ const Model = ({ setShow, details }) => {
                                     Authors:
                                 </div>
                                 <ul className={styles['model-authors-list']}>
-                                    {details.authors.split(',').map(
+                                    {details.Authors.split(',').map(
                                         (author, idx) => <li key={idx}>{author}</li>
                                     )}
                                 </ul>
                             </div>
 
                             <div className={styles['model-published-date']}>
-                                Published Date: <b>{details.publishedDate}</b>
+                                Published Date: <b>{details['Published Date']}</b>
                             </div>
                         </div>
                     </div>
                     <div className={styles['model-right-bottom']}>
-                        <Link href={details.link} target='new' className={styles['model-button-wrapper']}>
+                        <Link href={details.Link} target='new' className={styles['model-button-wrapper']}>
                             <div className={styles['action-button']} >View Article</div>
                         </Link>
                     </div>
