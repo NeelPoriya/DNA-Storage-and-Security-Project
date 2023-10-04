@@ -30,6 +30,9 @@
 .filter-author-dropdown-content {
     display: flex;
     flex-direction: column;
+
+    max-height: 15em;
+    overflow-y: scroll;
 }
 
 .filter-source-dropdown-item,
@@ -42,4 +45,9 @@
 .filter-author-dropdown-item-text {
     font-size: 0.8em;
     padding-left: .5em;
+}
+
+.filter-source-dropdown-content::-webkit-scrollbar,
+.filter-author-dropdown-content::-webkit-scrollbar {
+    display: none;
 }

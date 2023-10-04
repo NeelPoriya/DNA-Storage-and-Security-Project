@@ -12,62 +12,6 @@ import { CircularProgress } from '@mui/material';
 
 const PageSize = 12;
 
-let detailsSample = {
-  // heading
-  title: "Fractal construction of constrained code words for DNA storage systems",
-  // high priority
-  Source: "Oxford Academics",
-  type: "Articles And Papers",
-  topics: "Codeword, Storage",
-
-  // low priority
-  Authors: "Hannah F L\u00f6chel, Marius Welzel, Georges Hattab, Anne-Christin, Hauschild, Dominik Heider",
-  publishedDate: "15 December 2021",
-
-  // link
-  link: "https://doi.org/10.1093/nar/gkab1209"
-};
-
-const details = [
-  {
-    title: "Fractal construction of constrained code words for DNA storage systems",
-    Source: "Oxford Academics",
-    type: "Articles And Papers",
-    topics: "Codeword, Storage",
-    Authors: "Hannah F L\u00f6chel, Marius Welzel, Georges Hattab, Anne-Christin, Hauschild, Dominik Heider",
-    publishedDate: "15 December 2021",
-    link: "https://doi.org/10.1093/nar/gkab1209"
-  },
-  {
-    title: "Sometimes, I feel like I'm talking to a wall",
-    Source: "DA-IICT",
-    type: "Conference Paper",
-    topics: "WordCode, DNA storage",
-    Authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann",
-    publishedDate: "24 January 2023",
-    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  },
-  {
-    title: "Small Title",
-    Source: "Large Source - Very large Source",
-    type: "Not so good paper",
-    topics: "WordCode, DNA storage, large topic, very large topic, super-duper large topic",
-    Authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann, a very long name, a very-very long name indeed",
-    publishedDate: "01 October 2023",
-    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  },
-
-  {
-    title: "Medium Title - Medium Title - Medium Title",
-    Source: "Small institute",
-    type: "Youtube Channel",
-    topics: "WordCode, Influencer",
-    Authors: "Mikkel Khandval, Marhta Nielson, Regina Tiedmann",
-    publishedDate: "10 March 2023",
-    link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  }
-]
-
 export default function Home() {
   const [data, setData] = useState([]);
   // create a new data from the original data with extracted sources
@@ -87,6 +31,7 @@ export default function Home() {
       .catch(err => console.log(err));
   }, []);
 
+  // apply filters on data
   useEffect(() => {
     const nData = data.filter(
       (item) => {
@@ -106,12 +51,13 @@ export default function Home() {
     setNewData(nData);
   }, [selectedSources, selectedAuthors, data]);
 
+  // using another state to store the current page data (filtered/unfiltered) 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
 
     // check if no filters are applied
-    if (isAnyFilterApplied(selectedSources, selectedAuthors))
+    if (!isAnyFilterApplied(selectedSources, selectedAuthors))
       return data.slice(firstPageIndex, lastPageIndex);
     return newData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, newData, data, selectedSources, selectedAuthors]);
@@ -166,7 +112,7 @@ export default function Home() {
               className="pagination-bar"
               currentPage={currentPage}
               totalCount={
-                isAnyFilterApplied(selectedSources, selectedAuthors) ?
+                !isAnyFilterApplied(selectedSources, selectedAuthors) ?
                   data.length : newData.length
               }
               pageSize={PageSize}
@@ -179,6 +125,6 @@ export default function Home() {
   )
 }
 function isAnyFilterApplied(selectedSources, selectedAuthors) {
-  return (selectedSources.length === 0 && selectedAuthors.length === 0);
+  return !(selectedSources.length === 0 && selectedAuthors.length === 0);
 }
 
