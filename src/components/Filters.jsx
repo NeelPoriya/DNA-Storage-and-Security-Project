@@ -22,7 +22,7 @@ const extractAuthors = (data) => {
     return authors;
 }
 
-const Filters = ({ data, selectedSources, setSelectedSources, setSelectedAuthors }) => {
+const Filters = ({ data, selectedSources, selectedAuthors, setSelectedSources, setSelectedAuthors }) => {
     const [showSources, setShowSources] = useState(false);
     const toggleSources = () => setShowSources(prev => !prev);
 
@@ -101,6 +101,7 @@ const Filters = ({ data, selectedSources, setSelectedSources, setSelectedAuthors
                                                         setSelectedAuthors(prev => prev.filter(item => item !== author));
                                                     }
                                                 }}
+                                                defaultChecked={selectedAuthors.includes(author)}
                                             />
                                             <div className={styles['filter-author-dropdown-item-text']}>
                                                 {author}

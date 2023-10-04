@@ -69,6 +69,7 @@ export default function Home() {
         <Filters
           data={data}
           selectedSources={selectedSources}
+          selectedAuthors={selectedAuthors}
           setSelectedSources={setSelectedSources}
           setSelectedAuthors={setSelectedAuthors}
         />
