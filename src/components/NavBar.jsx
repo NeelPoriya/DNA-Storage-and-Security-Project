@@ -1,84 +1,115 @@
-'use client'
-import Image from 'next/image';
-import styles from './../styles/NavBar.module.css';
-import { PiHouse } from 'react-icons/pi';
-import { BsFolder } from 'react-icons/bs';
-import { SlCalender } from 'react-icons/sl';
-import { AiOutlineClockCircle } from 'react-icons/ai';
-import { FiUsers } from 'react-icons/fi';
-import { IoChatbubbleOutline } from 'react-icons/io5';
-import { BiSolidBookBookmark } from 'react-icons/bi';
+import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import { IoMenu } from 'react-icons/io5';
+import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { GiReceiveMoney } from 'react-icons/gi';
+import { FaStamp } from 'react-icons/fa';
+import { BsFillGearFill, BsFillCalendarEventFill, BsYoutube, BsBuildingsFill } from 'react-icons/bs';
+import { AiFillPlayCircle, AiOutlineCloudDownload } from 'react-icons/ai';
+import { ImBlogger } from 'react-icons/im';
+import { GoGoal } from 'react-icons/go';
+import { MdArticle } from 'react-icons/md';
+
+const navigationIconsSize = '1.25rem';
+
+const navigationItems = [
+    {
+        text: 'Research Paper & Articles',
+        icon: <MdArticle style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/research-papers'
+    },
+    {
+        text: 'Research Grants',
+        icon: <GiReceiveMoney style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/research-grants'
+    },
+    {
+        text: 'Patents',
+        icon: <FaStamp style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/patents'
+    },
+    {
+        text: 'Simulation Tools',
+        icon: <BsFillGearFill style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/simulation-tools'
+    },
+    {
+        text: 'Cources and Tutorials',
+        icon: <AiFillPlayCircle style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/cources-and-tutorials'
+    },
+    {
+        text: 'Conferences and Webinar events',
+        icon: <BsFillCalendarEventFill style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/conferences-and-webinar-events',
+    },
+    {
+        text: 'YouTube Content',
+        icon: <BsYoutube style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/youtube-content'
+    },
+    {
+        text: 'Blogs',
+        icon: <ImBlogger style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/blogs'
+    },
+    {
+        text: 'Projects',
+        icon: <GoGoal style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/projects'
+    },
+    {
+        text: 'Software & Tools',
+        icon: <AiOutlineCloudDownload style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/software-and-tools'
+    },
+    {
+        text: 'Companies',
+        icon: <BsBuildingsFill style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/companies'
+    }
+]
 
 const NavBar = () => {
-
-    const pathname = usePathname();
-    console.log(pathname);
+    const [toggleDrawer, setToggleDrawer] = useState(false);
 
     return (
-        <div className={styles['navbar']}>
-            <div className={styles['logo-wrapper']}>
-                <BiSolidBookBookmark className={styles['logo']} />
-            </div>
-            <div className={styles['nav-items-wrapper']}>
-                <div className={styles['nav-item']}>
-                    <Link href="/">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/' ? styles['active'] : ''}`}>
-                            <PiHouse
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-                <div className={styles['nav-item']}>
-                    <Link href="/folder">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/folder' ? styles['active'] : ''}`}>
-                            <BsFolder
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-                <div className={styles['nav-item']}>
-                    <Link href="/calender">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/calender' ? styles['active'] : ''}`}>
-                            <SlCalender
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-                <div className={styles['nav-item']}>
-                    <Link href="/time">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/time' ? styles['active'] : ''}`}>
-                            <AiOutlineClockCircle
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-                <div className={styles['nav-item']}>
-                    <Link href="/users">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/users' ? styles['active'] : ''}`}>
-                            <FiUsers
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-                <div className={styles['nav-item']}>
-                    <Link href="/chat">
-                        <div className={`${styles['icon-wrapper']} ${pathname === '/chat' ? styles['active'] : ''}`}>
-                            <IoChatbubbleOutline
-                                className={`${styles['icon']}`}
-                            />
-                        </div>
-                    </Link>
-                </div>
-            </div>
-        </div>
-    )
+        <AppBar position={'sticky'} >
+            <Toolbar variant="dense">
+                <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setToggleDrawer(true)}>
+                    <IoMenu />
+                </IconButton>
+                <Typography variant="h6" color="inherit" component="div">
+                    DNA Archive
+                </Typography>
+            </Toolbar>
+            <Drawer
+                anchor={'left'}
+                open={toggleDrawer}
+                onClose={() => setToggleDrawer(false)}
+            >
+                <Box sx={{ width: 250 }} role="presentation">
+                    <List>
+
+                        {navigationItems.map((item, idx) => (
+                            <ListItem key={idx}>
+                                <Link href={item.href} style={{ width: '100%' }}>
+                                    <ListItemButton onClick={() => { setToggleDrawer(false) }} >
+                                        <ListItemIcon sx={{ color: 'black' }}>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText >
+                                            {item.text}
+                                        </ListItemText>
+                                    </ListItemButton>
+                                </Link>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+            </Drawer>
+        </AppBar >
+    );
 }
 
 export default NavBar

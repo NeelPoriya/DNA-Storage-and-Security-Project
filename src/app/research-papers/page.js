@@ -17,7 +17,7 @@ const page = () => {
             <div style={{
                 textAlign: 'center'
             }}>
-                Folder feature coming soon...
+                Research Papers feature coming soon...
             </div>
         </div>
     )

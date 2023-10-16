@@ -17,18 +17,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-.page {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.content {
-  width: 100%;
-  height: 100%;
-}
