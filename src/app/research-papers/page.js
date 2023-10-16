@@ -1,26 +1,27 @@
-import Header from "@/components/Header"
+'use client'
+import { Box, CircularProgress, LinearProgress } from "@mui/material";
+import { useEffect, useState } from "react";
 
-const page = () => {
+const ResearchPapersPage = () => {
+    const [papers, setPapers] = useState([]);
+
+    useEffect(() => {
+        async function fetchPapers() {
+            const response = await fetch('/api/articles-papers');
+            const data = await response.json();
+
+            setPapers(data.data);
+        }
+
+        fetchPapers();
+    }, []);
+
     return (
-        <div style={{
-            width: '100%',
-            height: '100%',
-            fontSize: '1.5em',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '32px',
-            fontWeight: 'bold'
-        }}>
-            <div style={{
-                textAlign: 'center'
-            }}>
-                Research Papers feature coming soon...
-            </div>
-        </div>
-    )
+        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+            {papers.length === 0 && <CircularProgress />}
+            {papers.length !== 0 && 'Data length: ' + papers.length.toString()}
+        </Box>
+    );
 }
 
-export default page 
+export default ResearchPapersPage 
