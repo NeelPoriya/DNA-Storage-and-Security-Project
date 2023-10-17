@@ -57,23 +57,23 @@ const ResearchPapersPage = () => {
 
     useEffect(() => {
         async function fetchPapers() {
-            try {
+            // try {
 
-                const response = await fetch('/api/articles-papers');
-                const data = await response.json();
+            const response = await fetch('/api/articles-papers');
+            const data = await response.json();
 
-                const newData = data.data.map((d, i) => {
-                    d[`id`] = i;
-                    d['Published Date'] = new Date(d['Published Date']);
-                    return d;
-                });
+            const newData = data.data.map((d, i) => {
+                d[`id`] = i;
+                d['Published Date'] = new Date(d['Published Date']);
+                return d;
+            });
 
-                console.log(newData);
-                setPapers(newData);
+            console.log(newData);
+            setPapers(newData);
 
-            } catch (e) {
-                console.log('💣💣Error' + e);
-            }
+            // } catch (e) {
+            //     console.log('💣💣Error' + e);
+            // }
         }
 
         fetchPapers();
