@@ -57,8 +57,6 @@ const ResearchPapersPage = () => {
 
     useEffect(() => {
         async function fetchPapers() {
-            // try {
-
             const response = await fetch('/api/articles-papers');
             const data = await response.json();
 
@@ -68,12 +66,7 @@ const ResearchPapersPage = () => {
                 return d;
             });
 
-            console.log(newData);
             setPapers(newData);
-
-            // } catch (e) {
-            //     console.log('💣💣Error' + e);
-            // }
         }
 
         fetchPapers();
