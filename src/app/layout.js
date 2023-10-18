@@ -13,7 +13,6 @@ const theme = createTheme({
   },
 });
 
-
 export default function RootLayout({ children }) {
   return (
     <ThemeProvider theme={theme}>

@@ -80,7 +80,7 @@ const NavBar = () => {
                     <IoMenu />
                 </IconButton>
                 <Typography variant="h6" color="inherit" component="div">
-                    DNA Archive
+                    <Link href="/">DNA Archive</Link>
                 </Typography>
             </Toolbar>
             <Drawer

@@ -8,9 +8,9 @@ const columns = [
         field: 'Title',
         headerName: 'Title',
         width: 500,
-        renderCell: (params) => {
-            return params['formattedValue'] === '' ? '🖕' : params['formattedValue'];
-        }
+        // renderCell: (params) => {
+        //     return params['formattedValue'] === '' ? '🖕' : params['formattedValue'];
+        // }
     },
     {
         field: 'Organization / Authors',
@@ -24,7 +24,8 @@ const columns = [
         editable: false,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
-                {params['formattedValue'] === '' ? '🖕' : 'Open'}
+                {/* {params['formattedValue'] === '' ? '🖕' : 'Open'} */}
+                {'Open'}
             </Button>;
         }
     },
