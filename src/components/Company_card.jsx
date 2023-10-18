@@ -20,7 +20,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function MediaCard({company}) {
+export default function MediaCard({ company }) {
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
@@ -30,25 +30,25 @@ export default function MediaCard({company}) {
 
   return (
     <>
-    <Card sx={{ maxWidth: 345, margin: "16px", bgcolor: "#bbdefb", display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {company.Organization}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {company.Description.split(' ').slice(0, 15).join(' ') + "..."}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => setDialogOpen(true)}>Read More</Button>
-      </CardActions>
-    </Card>
-    <Dialog
+      <Card sx={{ maxWidth: 345, margin: "16px", bgcolor: "#bbdefb", display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <CardMedia
+          sx={{ height: 140 }}
+          image="/static/images/cards/contemplative-reptile.jpg"
+          title="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {company.Organization}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {company.Description.split(' ').slice(0, 15).join(' ') + "..."}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={() => setDialogOpen(true)}>Read More</Button>
+        </CardActions>
+      </Card>
+      <Dialog
         open={dialogOpen}
         onClose={handleClose}
         PaperComponent={PaperComponent}
