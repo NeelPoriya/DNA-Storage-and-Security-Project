@@ -59,9 +59,11 @@ const ResearchPapersPage = () => {
             const data = await response.json();
 
             const newData = data.data.map((d, i) => {
-                d['id'] = i;
-                d['Published Date'] = new Date(d['Published Date']);
-                return d;
+                return {
+                    ...d,
+                    'id': i,
+                    'Published Date': new Date(d['Published Date'])
+                };
             });
 
             setPapers(newData);

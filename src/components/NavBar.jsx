@@ -36,7 +36,7 @@ const navigationItems = [
     {
         text: 'Cources and Tutorials',
         icon: <AiFillPlayCircle style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
-        href: '/cources-and-tutorials'
+        href: '/courses-and-tutorials'
     },
     {
         text: 'Conferences and Webinar events',
