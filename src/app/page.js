@@ -1,14 +1,13 @@
 'use client';
-import { useTheme } from "@emotion/react";
+import ApexChart from "@/components/ApexChart";
 import { Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
 import { AiFillPlayCircle, AiOutlineCloudDownload } from "react-icons/ai";
 import { BsBuildingsFill, BsFillCalendarEventFill, BsFillGearFill, BsYoutube } from "react-icons/bs";
 import { FaStamp } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GoGoal } from "react-icons/go";
-import { GrArticle } from "react-icons/gr";
 import { ImBlogger } from "react-icons/im";
 import { MdArticle } from "react-icons/md";
 
@@ -190,7 +189,7 @@ const Home = () => {
   const papersGraph = (
     <Card elevation={2} sx={{ margin: '1rem', padding: '1rem' }}>
       <Typography variant="h6">Research & Articles Sources</Typography>
-      <ReactApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
+      <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
     </Card>
   );
 
