@@ -1,7 +1,7 @@
 'use client'
+import StripedDataGrid from "@/components/StripedDataGrid";
 import { Box, Button, CircularProgress, LinearProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
     {
@@ -43,10 +43,8 @@ const columns = [
     {
         field: 'Link',
         headerName: 'Link',
-        // width: ,
         editable: false,
         renderCell: (params) => {
-            // console.log(params);
             return <Button variant="contained" target="blank" href={params['formattedValue']}>Open</Button>;
         }
     },
@@ -61,7 +59,7 @@ const ResearchPapersPage = () => {
             const data = await response.json();
 
             const newData = data.data.map((d, i) => {
-                d[`id`] = i;
+                d['id'] = i;
                 d['Published Date'] = new Date(d['Published Date']);
                 return d;
             });
@@ -74,7 +72,7 @@ const ResearchPapersPage = () => {
 
     const dataGrid = (
         <Box sx={{ height: '100%', width: '100%' }}>
-            <DataGrid
+            <StripedDataGrid
                 rows={papers}
                 columns={columns}
                 initialState={{
@@ -85,6 +83,9 @@ const ResearchPapersPage = () => {
                     },
                 }}
                 pageSizeOptions={[12, 25]}
+                getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+                }
             />
         </Box>
     );
