@@ -1,7 +1,21 @@
+"use client";
 import Header from "@/components/Header";
 import Card from "@/components/Company_card";
+import { useEffect, useState } from "react";
 
 const page = () => {
+  const [companies, setCompanies] = useState([]);
+
+  const getCompanies = async () => {
+    const response = await fetch("/api/companies");
+    const FinalData = await response.json();
+    setCompanies(FinalData.data);
+  };
+
+  useEffect(() => {
+    getCompanies();
+  });
+
   return (
     // <div
     //   style={{
@@ -25,13 +39,9 @@ const page = () => {
         justifyContent: "center",
       }}
     >
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {companies.map((company, index) => {
+        return <Card key={index} company={company} />;
+      })}
     </div>
     //</div>
   );
