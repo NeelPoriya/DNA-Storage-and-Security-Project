@@ -24,6 +24,8 @@ export default function MediaCard({company}) {
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
+  console.log(company.path);
+
   const handleClose = () => {
     setDialogOpen(false);
   }
@@ -33,7 +35,7 @@ export default function MediaCard({company}) {
     <Card sx={{ maxWidth: 345, margin: "16px", bgcolor: "#bbdefb", display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <CardMedia
         sx={{ height: 140 }}
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image={company.path}
         title="green iguana"
       />
       <CardContent>
