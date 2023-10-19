@@ -5,8 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper } from '@mui/material';
+import { Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper } from '@mui/material';
 import Draggable from 'react-draggable';
+import Image from 'next/image';
 
 
 function PaperComponent(props) {
@@ -24,8 +25,6 @@ export default function MediaCard({ company }) {
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
-  console.log(company.path);
-
   const handleClose = () => {
     setDialogOpen(false);
   }
@@ -33,11 +32,19 @@ export default function MediaCard({ company }) {
   return (
     <>
     <Card sx={{ maxWidth: 345, margin: "16px", bgcolor: "#bbdefb", display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={company.path}
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'white'
+      }}>
+      <img
+        style={{ height: '140px', objectFit: 'fill'}}
+        src={company.path}
+        alt={'hello'}
         title="green iguana"
       />
+      </Box>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {company.Organization}
