@@ -1,7 +1,8 @@
 'use client';
 import ApexChart from "@/components/ApexChart";
-import { Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AiFillPlayCircle, AiOutlineCloudDownload } from "react-icons/ai";
 import { BsBuildingsFill, BsFillCalendarEventFill, BsFillGearFill, BsYoutube } from "react-icons/bs";
@@ -68,6 +69,7 @@ const Home = () => {
   const [tools, setTools] = useState([]);
   const [videos, setVideos] = useState([]);
   const [grants, setGrants] = useState([]);
+  const [softwares, setSoftwares] = useState([]);
 
   async function fetchData() {
     const promises = [
@@ -80,7 +82,8 @@ const Home = () => {
       fetch('/api/patents'),
       fetch('/api/projects'),
       fetch('/api/simulation-tools'),
-      fetch('/api/youtube')
+      fetch('/api/youtube'),
+      fetch('/api/softwares')
     ];
 
     try {
@@ -100,6 +103,7 @@ const Home = () => {
       setProjects(jsonData[7].data);
       setTools(jsonData[8].data);
       setVideos(jsonData[9].data);
+      setSoftwares(jsonData[10].data);
     } catch (e) {
       console.log(e);
     }
@@ -114,37 +118,59 @@ const Home = () => {
       <Typography variant="h6" marginBottom={1} marginLeft={1}>Statistics</Typography>
       <Grid container spacing={2} >
         <Grid item xs={spacing}>
-          {Item('Total Research Papers', papers.length, '#7FCD93', <MdArticle />)}
+          <Link href='/research-papers'>
+            {Item('Total Research Papers', papers.length, '#7FCD93', <MdArticle />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Blogs', blogs.length, '#F9A109', <ImBlogger />)}
+          <Link href='/blogs'>
+            {Item('Total Blogs', blogs.length, '#F9A109', <ImBlogger />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Companies', companies.length, '#686de0', <BsBuildingsFill />)}
+          <Link href='/companies'>
+            {Item('Total Companies', companies.length, '#686de0', <BsBuildingsFill />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Research Grants', grants.length, '#6ab04c', <GiReceiveMoney />)}
+          <Link href='/research-grants'>
+            {Item('Total Research Grants', grants.length, '#6ab04c', <GiReceiveMoney />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Patents', patents.length, '#01a3a4', <FaStamp />)}
+          <Link href='/patents'>
+            {Item('Total Patents', patents.length, '#01a3a4', <FaStamp />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Simulation Tools', tools.length, '#ee5253', <BsFillGearFill />)}
+          <Link href='/simulation-tools'>
+            {Item('Total Simulation Tools', tools.length, '#ee5253', <BsFillGearFill />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Courses', courses.length, '#f368e0', <AiFillPlayCircle />)}
+          <Link href='/courses-and-tutorials'>
+            {Item('Total Courses', courses.length, '#f368e0', <AiFillPlayCircle />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Events', events.length, '#8395a7', <BsFillCalendarEventFill />)}
+          <Link href='/conferences-and-webinar-events'>
+            {Item('Total Events', events.length, '#8395a7', <BsFillCalendarEventFill />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('YouTube Content', videos.length, '#e84118', <BsYoutube />)}
+          <Link href='/youtube-content'>
+            {Item('YouTube Content', videos.length, '#e84118', <BsYoutube />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Projects', projects.length, '#40739e', <GoGoal />)}
+          <Link href='/projects'>
+            {Item('Total Projects', projects.length, '#40739e', <GoGoal />)}
+          </Link>
         </Grid>
         <Grid item xs={spacing}>
-          {Item('Total Software & Tools', tools.length, '#EE5A24', <AiOutlineCloudDownload />)}
+          <Link href='/software-and-tools'>
+            {Item('Total Software & Tools', softwares.length, '#EE5A24', <AiOutlineCloudDownload />)}
+          </Link>
         </Grid>
       </Grid>
     </Box>
@@ -185,15 +211,17 @@ const Home = () => {
         }
       }]
     },
-
-
   };
 
   const papersGraph = (
-    <Card elevation={2} sx={{ margin: '1rem', padding: '1rem', borderRadius: '1rem' }}>
-      <Typography variant="h6">Research & Articles Sources</Typography>
-      <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
-    </Card>
+    <Grid container>
+      <Grid item xs={6}>
+        <Card elevation={2} sx={{ margin: '1rem', padding: '1rem', borderRadius: '1rem' }}>
+          <Typography variant="h6">Research & Articles Sources</Typography>
+          <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
+        </Card>
+      </Grid>
+    </Grid>
   );
 
   return (
