@@ -110,41 +110,44 @@ const Home = () => {
   }, []);
 
   const grid = (
-    <Grid container spacing={2} padding={2}>
-      <Grid item xs={spacing}>
-        {Item('Total Research Papers', papers.length, '#7FCD93', <MdArticle />)}
+    <Box padding={2}>
+      <Typography variant="h6" marginBottom={1} marginLeft={1}>Statistics</Typography>
+      <Grid container spacing={2} >
+        <Grid item xs={spacing}>
+          {Item('Total Research Papers', papers.length, '#7FCD93', <MdArticle />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Blogs', blogs.length, '#F9A109', <ImBlogger />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Companies', companies.length, '#686de0', <BsBuildingsFill />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Research Grants', grants.length, '#6ab04c', <GiReceiveMoney />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Patents', patents.length, '#01a3a4', <FaStamp />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Simulation Tools', tools.length, '#ee5253', <BsFillGearFill />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Courses', courses.length, '#f368e0', <AiFillPlayCircle />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Events', events.length, '#8395a7', <BsFillCalendarEventFill />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('YouTube Content', videos.length, '#e84118', <BsYoutube />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Projects', projects.length, '#40739e', <GoGoal />)}
+        </Grid>
+        <Grid item xs={spacing}>
+          {Item('Total Software & Tools', tools.length, '#EE5A24', <AiOutlineCloudDownload />)}
+        </Grid>
       </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Blogs', blogs.length, '#F9A109', <ImBlogger />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Companies', companies.length, '#686de0', <BsBuildingsFill />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Research Grants', grants.length, '#6ab04c', <GiReceiveMoney />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Patents', patents.length, '#01a3a4', <FaStamp />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Simulation Tools', tools.length, '#ee5253', <BsFillGearFill />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Courses', courses.length, '#f368e0', <AiFillPlayCircle />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Events', events.length, '#8395a7', <BsFillCalendarEventFill />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('YouTube Content', videos.length, '#e84118', <BsYoutube />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Projects', projects.length, '#40739e', <GoGoal />)}
-      </Grid>
-      <Grid item xs={spacing}>
-        {Item('Total Software & Tools', tools.length, '#EE5A24', <AiOutlineCloudDownload />)}
-      </Grid>
-    </Grid>
+    </Box>
   );
 
   const chartProps = {
@@ -167,14 +170,14 @@ const Home = () => {
       },
       legend: {
         formatter: function (val, opts) {
-          return val + ' : ' + extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex]
+          return extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex] + ' - ' + extractSourceFrequencyArrayFromPapersArray(papers)[1][opts.seriesIndex]
         }
       },
       responsive: [{
         breakpoint: 480,
         options: {
           chart: {
-            width: 200
+            width: 400
           },
           legend: {
             position: 'bottom'
@@ -187,7 +190,7 @@ const Home = () => {
   };
 
   const papersGraph = (
-    <Card elevation={2} sx={{ margin: '1rem', padding: '1rem' }}>
+    <Card elevation={2} sx={{ margin: '1rem', padding: '1rem', borderRadius: '1rem' }}>
       <Typography variant="h6">Research & Articles Sources</Typography>
       <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
     </Card>
