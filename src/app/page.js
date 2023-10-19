@@ -57,7 +57,8 @@ const Home = () => {
   const md = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const sm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
-  const spacing = sm ? 12 : md ? 6 : lg ? 4 : 3;
+  const cardSpacing = sm ? 12 : md ? 6 : lg ? 4 : 3;
+  const chartSpacing = sm ? 12 : md ? 12 : lg ? 12 : 6;
 
   const [blogs, setBlogs] = useState([]);
   const [companies, setCompanies] = useState([]);
@@ -117,57 +118,57 @@ const Home = () => {
     <Box padding={2}>
       <Typography variant="h6" marginBottom={1} marginLeft={1}>Statistics</Typography>
       <Grid container spacing={2} >
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/research-papers'>
             {Item('Total Research Papers', papers.length, '#7FCD93', <MdArticle />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/blogs'>
             {Item('Total Blogs', blogs.length, '#F9A109', <ImBlogger />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/companies'>
             {Item('Total Companies', companies.length, '#686de0', <BsBuildingsFill />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/research-grants'>
             {Item('Total Research Grants', grants.length, '#6ab04c', <GiReceiveMoney />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/patents'>
             {Item('Total Patents', patents.length, '#01a3a4', <FaStamp />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/simulation-tools'>
             {Item('Total Simulation Tools', tools.length, '#ee5253', <BsFillGearFill />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/courses-and-tutorials'>
             {Item('Total Courses', courses.length, '#f368e0', <AiFillPlayCircle />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/conferences-and-webinar-events'>
             {Item('Total Events', events.length, '#8395a7', <BsFillCalendarEventFill />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/youtube-content'>
             {Item('YouTube Content', videos.length, '#e84118', <BsYoutube />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/projects'>
             {Item('Total Projects', projects.length, '#40739e', <GoGoal />)}
           </Link>
         </Grid>
-        <Grid item xs={spacing}>
+        <Grid item xs={cardSpacing}>
           <Link href='/software-and-tools'>
             {Item('Total Software & Tools', softwares.length, '#EE5A24', <AiOutlineCloudDownload />)}
           </Link>
@@ -215,7 +216,7 @@ const Home = () => {
 
   const papersGraph = (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={chartSpacing}>
         <Card elevation={2} sx={{ margin: '1rem', padding: '1rem', borderRadius: '1rem' }}>
           <Typography variant="h6">Research & Articles Sources</Typography>
           <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
