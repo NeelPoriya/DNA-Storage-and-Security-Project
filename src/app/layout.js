@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import NavBar from '@/components/NavBar'
 import './globals.css'
 import { Inter, Raleway } from 'next/font/google'
@@ -12,7 +12,6 @@ const theme = createTheme({
     fontFamily: raleway.style.fontFamily,
   },
 });
-
 
 export default function RootLayout({ children }) {
   return (

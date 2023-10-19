@@ -33,7 +33,7 @@ const columns = [
     },
 ];
 
-const PatentsPage = () => {
+const BlogsPage = () => {
 
     const [blogs, setBlogs] = useState([]);
 
@@ -83,4 +83,4 @@ const PatentsPage = () => {
     )
 }
 
-export default PatentsPage 
+export default BlogsPage 

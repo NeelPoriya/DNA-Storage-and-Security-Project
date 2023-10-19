@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Card from "@/components/Company_card";
 import { useEffect, useState } from "react";
 
-const page = () => {
+const CompaniesPage = () => {
   const [companies, setCompanies] = useState([]);
 
   const getCompanies = async () => {
@@ -47,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CompaniesPage;

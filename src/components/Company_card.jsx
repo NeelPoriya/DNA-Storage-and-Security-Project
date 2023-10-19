@@ -20,7 +20,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function MediaCard({company}) {
+export default function MediaCard({ company }) {
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
