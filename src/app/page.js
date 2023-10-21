@@ -1,7 +1,6 @@
 'use client';
 import ApexChart from "@/components/ApexChart";
-import { Box, Button, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
-import dynamic from "next/dynamic";
+import { Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AiFillPlayCircle, AiOutlineCloudDownload } from "react-icons/ai";

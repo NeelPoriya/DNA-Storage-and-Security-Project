@@ -1,4 +1,5 @@
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+'use client'
+import { AppBar, Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import { IoMenu } from 'react-icons/io5';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -9,8 +10,10 @@ import { AiFillPlayCircle, AiOutlineCloudDownload } from 'react-icons/ai';
 import { ImBlogger } from 'react-icons/im';
 import { GoGoal } from 'react-icons/go';
 import { MdArticle } from 'react-icons/md';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const navigationIconsSize = '1.25rem';
+const settings = ['Notifications', 'Log Out'];
 
 const navigationItems = [
     {
@@ -71,7 +74,53 @@ const navigationItems = [
 ]
 
 const NavBar = () => {
+    const { data: session } = useSession();
     const [toggleDrawer, setToggleDrawer] = useState(false);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    const userProfile = session ?
+        <Box sx={{ flexGrow: '0' }}>
+            <Tooltip title={session.user.name}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="User Image" src={session.user.image} />
+                </IconButton>
+            </Tooltip>
+            <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+            >
+                <MenuItem key='Notifications' onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Notifications</Typography>
+                </MenuItem>
+                <MenuItem key='Logout' onClick={() => signOut()}>
+                    <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+            </Menu>
+        </Box>
+        :
+        <Button variant='inherit' onClick={() => signIn()}>
+            Login
+        </Button>;
 
     return (
         <AppBar position={'sticky'} >
@@ -79,9 +128,10 @@ const NavBar = () => {
                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setToggleDrawer(true)}>
                     <IoMenu />
                 </IconButton>
-                <Typography variant="h6" color="inherit" component="div">
+                <Typography variant="h6" color="inherit" component="div" sx={{ flexGrow: '1' }}>
                     <Link href="/">DNA Archive</Link>
                 </Typography>
+                {userProfile}
             </Toolbar>
             <Drawer
                 anchor={'left'}
