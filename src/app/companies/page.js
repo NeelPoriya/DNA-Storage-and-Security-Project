@@ -29,7 +29,7 @@ const CompaniesPage = () => {
         }}
       >
         {companies.map((company, index) => {
-          return <Card key={index} company={company} />;
+          return <Card key={index} company={company} category={'Company'} />;
         })}
       </div>
     </>

@@ -56,7 +56,7 @@ const YoutubePage = () => {
         fetchVideos();
     }, []);
 
-    return <ModifiedTable data={videos} columns={columns} />
+    return <ModifiedTable data={videos} columns={columns} category={'Video'} />
 }
 
 export default YoutubePage 

@@ -53,7 +53,7 @@ const SimulationToolsPage = () => {
         fetchSimulationTools();
     }, []);
 
-    return <ModifiedTable data={simulationTools} columns={columns} />
+    return <ModifiedTable data={simulationTools} columns={columns} category={'Simulation Tool'} />
 }
 
 export default SimulationToolsPage 

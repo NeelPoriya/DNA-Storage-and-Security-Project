@@ -60,7 +60,7 @@ const ProjectsPage = () => {
     }, []);
 
 
-    return <ModifiedTable data={projects} columns={columns} />
+    return <ModifiedTable data={projects} columns={columns} category={'Project'} />
 }
 
 export default ProjectsPage 

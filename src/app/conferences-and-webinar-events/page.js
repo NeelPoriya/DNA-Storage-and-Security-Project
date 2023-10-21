@@ -56,7 +56,7 @@ const EventsPage = () => {
         fetchEvents();
     }, []);
 
-    return <ModifiedTable data={events} columns={columns} />
+    return <ModifiedTable data={events} columns={columns} category={'Event'} />
 }
 
 export default EventsPage 

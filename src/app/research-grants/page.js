@@ -53,7 +53,7 @@ const GrantsPage = () => {
     }, []);
 
 
-    return <ModifiedTable data={grants} columns={columns} />
+    return <ModifiedTable data={grants} columns={columns} category={'Research Grant'} />
 }
 
 export default GrantsPage 

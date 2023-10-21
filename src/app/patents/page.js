@@ -51,7 +51,7 @@ const PatentsPage = () => {
     }, []);
 
 
-    return <ModifiedTable data={patents} columns={columns} />
+    return <ModifiedTable data={patents} columns={columns} category={'Patent'} />
 }
 
 export default PatentsPage 

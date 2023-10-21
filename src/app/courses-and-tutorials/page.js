@@ -56,7 +56,7 @@ const CoursesPage = () => {
         fetchCourses();
     }, []);
 
-    return <ModifiedTable data={courses} columns={columns} />
+    return <ModifiedTable data={courses} columns={columns} category={'Course'} />
 }
 
 export default CoursesPage 

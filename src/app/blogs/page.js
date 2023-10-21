@@ -56,7 +56,7 @@ const BlogsPage = () => {
         fetchBlogs();
     }, []);
 
-    return <ModifiedTable data={blogs} columns={columns} />
+    return <ModifiedTable data={blogs} columns={columns} category={'Blog'} />
 }
 
 export default BlogsPage 

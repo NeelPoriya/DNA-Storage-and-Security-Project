@@ -1,9 +1,7 @@
 'use client'
 import ModifiedTable from "@/components/ModifiedTable";
-import StripedDataGrid from "@/components/StripedDataGrid";
-import { Box, Button, CircularProgress, LinearProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 
 const columns = [
     {
@@ -74,7 +72,7 @@ const ResearchPapersPage = () => {
         fetchPapers();
     }, []);
 
-    return <ModifiedTable data={papers} columns={columns} />;
+    return <ModifiedTable data={papers} columns={columns} category={'Research Paper'} />;
 }
 
 export default ResearchPapersPage;

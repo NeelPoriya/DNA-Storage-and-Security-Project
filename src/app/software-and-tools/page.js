@@ -51,7 +51,7 @@ const SoftwaresPage = () => {
     }, []);
 
 
-    return <ModifiedTable data={softwares} columns={columns} />
+    return <ModifiedTable data={softwares} columns={columns} category={'Software/Tool'} />
 }
 
 export default SoftwaresPage 
