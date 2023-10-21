@@ -129,7 +129,7 @@ const NavBar = () => {
                     <IoMenu />
                 </IconButton>
                 <Typography variant="h6" color="inherit" component="div" sx={{ flexGrow: '1' }}>
-                    <Link href="/">DNA Archive</Link>
+                    <Link href="/">DNA Resource Page</Link>
                 </Typography>
                 {userProfile}
             </Toolbar>
