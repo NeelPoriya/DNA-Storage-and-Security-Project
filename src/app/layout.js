@@ -1,5 +1,6 @@
 'use client';
 import NavBar from '@/components/NavBar'
+import styles from './page.module.css';
 import './globals.css'
 import { Inter, Raleway } from 'next/font/google'
 import { ThemeProvider, createTheme } from '@mui/material'
@@ -20,11 +21,9 @@ export default function RootLayout({ children }) {
       <ThemeProvider theme={theme}>
         <html lang="en">
           <body className={`${inter.className} ${raleway.className}`}>
-            <div className={'page'}>
+            <div className={styles['page']}>
               <NavBar />
-              <div className={'content'}>
-                {children}
-              </div>
+              {children}
             </div>
           </body>
         </html>

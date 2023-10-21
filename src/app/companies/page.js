@@ -18,20 +18,6 @@ const CompaniesPage = () => {
   });
 
   return (
-    // <div
-    //   style={{
-    //     width: "100%",
-    //     height: "100%",
-    //     fontSize: "1.5em",
-    //     display: "flex",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //     flexDirection: "column",
-    //     justifyContent: "center",
-    //     padding: "32px",
-    //     fontWeight: "bold",
-    //   }}
-    // >
     <>
       {companies.length === 0 && <CircularProgress />}
       <div
@@ -43,11 +29,10 @@ const CompaniesPage = () => {
         }}
       >
         {companies.map((company, index) => {
-          return <Card key={index} company={company} />;
+          return <Card key={index} company={company} category={'Company'} />;
         })}
       </div>
     </>
-    //</div>
   );
 };
 

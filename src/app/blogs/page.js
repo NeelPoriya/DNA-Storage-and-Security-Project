@@ -1,4 +1,5 @@
 'use client'
+import ModifiedTable from "@/components/ModifiedTable";
 import StripedDataGrid from "@/components/StripedDataGrid";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -55,32 +56,7 @@ const BlogsPage = () => {
         fetchBlogs();
     }, []);
 
-    const dataGrid = (
-        <Box sx={{ height: '100%', width: '100%' }}>
-            <StripedDataGrid
-                rows={blogs}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 12,
-                        },
-                    },
-                }}
-                pageSizeOptions={[12, 25]}
-                getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-                }
-            />
-        </Box>
-    );
-
-    return (
-        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            {blogs.length === 0 && <CircularProgress />}
-            {blogs.length !== 0 && dataGrid}
-        </Box>
-    )
+    return <ModifiedTable data={blogs} columns={columns} category={'Blog'} />
 }
 
 export default BlogsPage 

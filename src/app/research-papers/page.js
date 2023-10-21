@@ -1,6 +1,6 @@
 'use client'
-import StripedDataGrid from "@/components/StripedDataGrid";
-import { Box, Button, CircularProgress, LinearProgress } from "@mui/material";
+import ModifiedTable from "@/components/ModifiedTable";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const columns = [
@@ -72,32 +72,7 @@ const ResearchPapersPage = () => {
         fetchPapers();
     }, []);
 
-    const dataGrid = (
-        <Box sx={{ height: '100%', width: '100%' }}>
-            <StripedDataGrid
-                rows={papers}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 12,
-                        },
-                    },
-                }}
-                pageSizeOptions={[12, 25]}
-                getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-                }
-            />
-        </Box>
-    );
-
-    return (
-        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            {papers.length === 0 && <CircularProgress />}
-            {papers.length !== 0 && dataGrid}
-        </Box>
-    );
+    return <ModifiedTable data={papers} columns={columns} category={'Research Paper'} />;
 }
 
-export default ResearchPapersPage 
+export default ResearchPapersPage;
