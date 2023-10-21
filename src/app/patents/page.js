@@ -1,4 +1,5 @@
 'use client'
+import ModifiedTable from "@/components/ModifiedTable";
 import StripedDataGrid from "@/components/StripedDataGrid";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -8,9 +9,6 @@ const columns = [
         field: 'Title',
         headerName: 'Title',
         width: 500,
-        // renderCell: (params) => {
-        //     return params['formattedValue'] === '' ? '🖕' : params['formattedValue'];
-        // }
     },
     {
         field: 'Organization / Authors',
@@ -24,7 +22,6 @@ const columns = [
         editable: false,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
-                {/* {params['formattedValue'] === '' ? '🖕' : 'Open'} */}
                 {'Open'}
             </Button>;
         }
@@ -53,32 +50,8 @@ const PatentsPage = () => {
         fetchPatents();
     }, []);
 
-    const dataGrid = (
-        <Box sx={{ height: '100%', width: '100%' }}>
-            <StripedDataGrid
-                rows={patents}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 12,
-                        },
-                    },
-                }}
-                pageSizeOptions={[12, 25]}
-                getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-                }
-            />
-        </Box>
-    );
 
-    return (
-        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            {patents.length === 0 && <CircularProgress />}
-            {patents.length !== 0 && dataGrid}
-        </Box>
-    )
+    return <ModifiedTable data={patents} columns={columns} />
 }
 
 export default PatentsPage 

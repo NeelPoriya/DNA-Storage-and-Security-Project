@@ -1,4 +1,5 @@
 'use client'
+import ModifiedTable from "@/components/ModifiedTable";
 import StripedDataGrid from "@/components/StripedDataGrid";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -52,32 +53,7 @@ const SimulationToolsPage = () => {
         fetchSimulationTools();
     }, []);
 
-    const dataGrid = (
-        <Box sx={{ height: '100%', width: '100%' }}>
-            <StripedDataGrid
-                rows={simulationTools}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 12,
-                        },
-                    },
-                }}
-                pageSizeOptions={[12, 25]}
-                getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-                }
-            />
-        </Box>
-    );
-
-    return (
-        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            {simulationTools.length === 0 && <CircularProgress />}
-            {simulationTools.length !== 0 && dataGrid}
-        </Box>
-    )
+    return <ModifiedTable data={simulationTools} columns={columns} />
 }
 
 export default SimulationToolsPage 
