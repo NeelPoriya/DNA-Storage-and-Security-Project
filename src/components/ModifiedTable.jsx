@@ -128,7 +128,7 @@ export default function ModifiedTable({ data, columns, category }) {
             <Button
                 variant='text'
                 onClick={() => handleClickOpen()}
-                disabled={!(session && session.user !== null) && (canEdit === undefined || userStatus === undefined)}
+                disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
             >
                 <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                 Add New
