@@ -59,8 +59,6 @@ export default function ModifiedTable({ data, columns, category }) {
     }
 
     const handleClickOpen = () => {
-        if (canEdit === undefined || userStatus === undefined) return;
-
         if (canEdit)
             setAccessDialogOpen(true);
         else
@@ -130,7 +128,7 @@ export default function ModifiedTable({ data, columns, category }) {
             <Button
                 variant='text'
                 onClick={() => handleClickOpen()}
-                disabled={!(session && session.user !== null)}
+                disabled={!(session && session.user !== null) && (canEdit === undefined || userStatus === undefined)}
             >
                 <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                 Add New
