@@ -1,29 +1,75 @@
-import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormHelperText, Input, InputLabel, Slide, Snackbar, TextField, Typography } from "@mui/material";
-import { AiOutlinePlus } from "react-icons/ai";
+import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input, InputLabel, Slide, Snackbar, TextField, Typography } from "@mui/material";
+import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
 import StripedDataGrid from "./StripedDataGrid";
 import { forwardRef, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { RxCross2 } from 'react-icons/rx';
+import { LoadingButton } from "@mui/lab";
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function ModifiedTable({ data, columns, category }) {
+    // provides the session object to the client
     const { data: session } = useSession();
-    const [open, setOpen] = useState(false);
+
+    // switch for add-item dialog box
+    const [accessDialogOpen, setAccessDialogOpen] = useState(false);
+
+    // variable for storing input values in a single object
     const [input, setInput] = useState({});
+
+    // switch for snackbar
     const [snackbar, setSnackbar] = useState(false);
+
+    // access control for add-item dialog box
+    const [canEdit, setCanEdit] = useState(false);
+
+    // switch for request dialog box
+    const [requestDialogOpen, setRequestDialogOpen] = useState(false);
+
+    // stores userStatus data
+    const [userStatus, setUserStatus] = useState('');
+
+    // request loading
+    const [requestLoading, setRequestLoading] = useState(false);
+
+    console.log(userStatus);
+
+    const fetchUserDetails = async () => {
+        const response = await fetch('/api/users/superAdmin');
+        const data = await response.json();
+
+        setCanEdit(
+            data.user.role === 'admin' ||
+            (data.user.role === 'user' && data.user.userStatus === 'accepted')
+        );
+
+        setUserStatus(data.user.userStatus);
+    }
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, []);
 
     const handleChangeInput = (field, value) => {
         setInput(prev => { return { ...prev, [field]: value } });
     }
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if (canEdit)
+            setAccessDialogOpen(true);
+        else
+            setRequestDialogOpen(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        if (canEdit)
+            setAccessDialogOpen(false);
+        else
+            setRequestDialogOpen(false);
     };
 
     const handleSnackbarOpen = () => {
@@ -41,7 +87,7 @@ export default function ModifiedTable({ data, columns, category }) {
 
     const clearAllInput = () => {
         setInput({});
-        setOpen(false);
+        setAccessDialogOpen(false);
 
         // clear all textfields
         const textFields = document.querySelectorAll('input[type="text"]');
@@ -50,6 +96,25 @@ export default function ModifiedTable({ data, columns, category }) {
         });
 
         handleSnackbarOpen();
+    }
+
+    const requestAccess = async () => {
+        setRequestLoading(true);
+        const response = await fetch('/api/users/requestEdit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: session.user.email })
+        });
+
+        if (response.status === 200) {
+            setRequestLoading(false);
+            setUserStatus('pending');
+        }
+        else {
+            console.error('request failed: ', response);
+        }
     }
 
     const progress = (
@@ -92,9 +157,9 @@ export default function ModifiedTable({ data, columns, category }) {
         </Box>
     );
 
-    const FormInput = (
+    const AddButtonFormInput = (
         <Dialog
-            open={open}
+            open={accessDialogOpen}
             TransitionComponent={Transition}
             keepMounted
             onClose={handleClose}
@@ -123,6 +188,31 @@ export default function ModifiedTable({ data, columns, category }) {
         </Dialog >
     );
 
+    const RequestDialog = (
+        <Dialog
+            open={requestDialogOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="request-item-slide"
+            fullWidth
+            maxWidth={'sm'}
+        >
+            <DialogTitle>{'Permission Denied'}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    You are not authorized to add {category}. Please request the admin for permission to edit.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                {userStatus !== 'rejected' && <Button onClick={handleClose}>Cancel</Button>}
+                {userStatus === 'pending' && <LoadingButton loading={requestLoading} variant="contained" disabled><AiOutlineClockCircle style={{ fontSize: '1.1rem', marginRight: '.5rem' }} />Request Pending</LoadingButton>}
+                {userStatus === 'none' && <LoadingButton loading={requestLoading} variant="contained" onClick={() => { requestAccess() }}>Request Access</LoadingButton>}
+                {userStatus === 'rejected' && <LoadingButton loading={requestLoading} variant="contained" color="error" onClick={handleClose}><RxCross2 style={{ fontSize: '1.1rem', marginRight: '.5rem' }} /><strong>Admin rejected your request</strong>. Click to close</LoadingButton>}
+            </DialogActions>
+        </Dialog>
+    )
+
     const toast = (
         <Snackbar open={snackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
             <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: '100%', fontWeight: 'bold', color: 'darkslateblue' }}>
@@ -135,7 +225,8 @@ export default function ModifiedTable({ data, columns, category }) {
         <>
             {data.length === 0 && progress}
             {data.length !== 0 && dataGrid}
-            {FormInput}
+            {AddButtonFormInput}
+            {RequestDialog}
             {toast}
         </>
     );
