@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
+import { resourceTypes } from "@backend/utils";
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 
 
-const researchPaperSchema = new Schema({
+const articlePaperSchema = new Schema({
 
     title: {
         type: Types.String,
@@ -16,9 +18,10 @@ const researchPaperSchema = new Schema({
     },
     type: {
         type: Types.String,
-        required: true
+        required: true,
+        enum: resourceTypes
     },
-    author: {
+    authors: {
         type: [Types.String],
         required: true
     },
@@ -38,11 +41,11 @@ const researchPaperSchema = new Schema({
 
 })
 
-let ResearchPaper;
+let ArticlePaper;
 try {
-    ResearchPaper = mongoose.model('ResearchPaper');
+    ArticlePaper = mongoose.model('ArticlePaper');
 } catch (err) {
-    ResearchPaper = mongoose.model('ResearchPaper', researchPaperSchema, 'research_papers');
+    ArticlePaper = mongoose.model('ArticlePaper', articlePaperSchema, 'article_papers');
 }
 
-export default ResearchPaper;
+export default ArticlePaper;
