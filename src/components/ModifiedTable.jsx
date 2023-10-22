@@ -225,8 +225,8 @@ export default function ModifiedTable({ data, columns, category }) {
         <>
             {data.length === 0 && progress}
             {data.length !== 0 && dataGrid}
-            {AddButtonFormInput}
-            {canEdit !== undefined && RequestDialog}
+            {canEdit !== undefined && userStatus !== undefined && AddButtonFormInput}
+            {canEdit !== undefined && userStatus !== undefined && RequestDialog}
             {toast}
         </>
     );
