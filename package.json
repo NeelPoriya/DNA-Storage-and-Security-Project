@@ -17,6 +17,8 @@
     "apexcharts": "^3.44.0",
     "eslint": "8.50.0",
     "eslint-config-next": "13.5.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
     "next": "13.5.2",
     "next-auth": "^4.24.3",

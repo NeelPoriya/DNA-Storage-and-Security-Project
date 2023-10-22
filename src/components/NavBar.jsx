@@ -78,6 +78,8 @@ const NavBar = () => {
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
+    // console.log('Session: ', session);
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };

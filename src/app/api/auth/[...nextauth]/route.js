@@ -1,4 +1,6 @@
 const { default: NextAuth } = require("next-auth/next");
+import connectDB from "@backend/index";
+import User from "@backend/models/usersModel";
 import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
@@ -7,7 +9,39 @@ const handler = NextAuth({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
-    ]
+    ],
+    session: {
+        generateSessionToken: () => {
+            return randomUUID?.() ?? randomBytes(32).toString("hex")
+        }
+    },
+    callbacks: {
+        async session({ session, token }) {
+            session.accessToken = token.accessToken;
+            return session;
+        },
+        async signIn({ profile }) {
+            console.log(profile);
+
+            try {
+                await connectDB();
+                const userExist = await User.findOne({ email: profile.email });
+
+                if (!userExist) {
+                    await User.create({
+                        name: profile.name,
+                        email: profile.email,
+                    });
+                }
+
+                return true;
+
+            } catch (e) {
+                console.log(e);
+                return false;
+            }
+        }
+    }
 })
 
 export { handler as GET, handler as POST };

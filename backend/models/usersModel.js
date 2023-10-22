@@ -18,11 +18,26 @@ const userSchema = new Schema({
         type: Types.String,
         enum: ["admin", "user"],
         default: "user",
+    },
+    /*
+    * superAdmin: an admin who can add other admins
+    */
+    superAdmin: {
+        type: Types.Boolean,
+        default: false,
+    },
+    /*
+    * userStatus: defines the current status of the user for making updates to the database
+    */
+    userStatus: {
+        type: Types.String,
+        enum: ["pending", "rejected", "accepted", "none"],
+        default: "none",
     }
 })
 
 const methods = {
-    isAdmin: function(){
+    isAdmin: function () {
         return this.role === "admin"
     }
 }
@@ -32,7 +47,7 @@ try {
     User = mongoose.model("User")
     User.methods = methods
 } catch (error) {
-    User = mongoose.model("User", userSchema,"users")
+    User = mongoose.model("User", userSchema, "users")
     User.methods = methods
 }
 
