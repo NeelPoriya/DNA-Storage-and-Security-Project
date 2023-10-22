@@ -59,6 +59,8 @@ export default function ModifiedTable({ data, columns, category }) {
     }
 
     const handleClickOpen = () => {
+        if (canEdit === undefined || userStatus === undefined) return;
+
         if (canEdit)
             setAccessDialogOpen(true);
         else
@@ -225,8 +227,8 @@ export default function ModifiedTable({ data, columns, category }) {
         <>
             {data.length === 0 && progress}
             {data.length !== 0 && dataGrid}
-            {canEdit !== undefined && userStatus !== undefined && AddButtonFormInput}
-            {canEdit !== undefined && userStatus !== undefined && RequestDialog}
+            {AddButtonFormInput}
+            {RequestDialog}
             {toast}
         </>
     );
