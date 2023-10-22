@@ -2,7 +2,7 @@
 
 import { AppBar, Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import { IoMenu } from 'react-icons/io5';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { FaStamp } from 'react-icons/fa';
@@ -12,6 +12,7 @@ import { ImBlogger } from 'react-icons/im';
 import { GoGoal } from 'react-icons/go';
 import { MdArticle } from 'react-icons/md';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import NotificationDialog from './NotificationDialog';
 
 const navigationIconsSize = '1.25rem';
 
@@ -78,7 +79,23 @@ const NavBar = () => {
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
-    // console.log('Session: ', session);
+    const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
+
+    const [user, setUser] = useState({});
+
+    const fetchUserDetails = async () => {
+        const response = await fetch('/api/user');
+
+        if (response.ok) {
+            const data = await response.json();
+            setUser(data);
+        }
+    }
+
+    useEffect(() => {
+        if (session)
+            fetchUserDetails();
+    }, [session]);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -86,6 +103,11 @@ const NavBar = () => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleNavigationMenu = () => {
+        setAnchorElUser(null);
+        setOpenNotificationDialog(true);
     };
 
     const userProfile = session ?
@@ -111,13 +133,17 @@ const NavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                <MenuItem key='Notifications' onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Notifications</Typography>
-                </MenuItem>
+                {user && user.superAdmin &&
+                    <MenuItem key='Notifications' onClick={handleNavigationMenu}>
+                        <Typography textAlign="center">Notifications</Typography>
+
+                    </MenuItem>
+                }
                 <MenuItem key='Logout' onClick={() => signOut()}>
                     <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
             </Menu>
+            {user && user.superAdmin && <NotificationDialog open={openNotificationDialog} setOpen={setOpenNotificationDialog} />}
         </Box>
         :
         <Button variant='inherit' onClick={() => signIn()}>
