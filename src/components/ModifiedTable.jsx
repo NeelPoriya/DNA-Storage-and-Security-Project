@@ -25,16 +25,16 @@ export default function ModifiedTable({ data, columns, category }) {
     const [snackbar, setSnackbar] = useState(false);
 
     // access control for add-item dialog box
-    const [canEdit, setCanEdit] = useState(false);
+    const [canEdit, setCanEdit] = useState(undefined);
 
     // switch for request dialog box
-    const [requestDialogOpen, setRequestDialogOpen] = useState(false);
+    const [requestDialogOpen, setRequestDialogOpen] = useState(undefined);
 
     // stores userStatus data
-    const [userStatus, setUserStatus] = useState('');
+    const [userStatus, setUserStatus] = useState(undefined);
 
     // request loading
-    const [requestLoading, setRequestLoading] = useState(false);
+    const [requestLoading, setRequestLoading] = useState(undefined);
 
     console.log(userStatus);
 
@@ -226,7 +226,7 @@ export default function ModifiedTable({ data, columns, category }) {
             {data.length === 0 && progress}
             {data.length !== 0 && dataGrid}
             {AddButtonFormInput}
-            {RequestDialog}
+            {canEdit !== undefined && RequestDialog}
             {toast}
         </>
     );
