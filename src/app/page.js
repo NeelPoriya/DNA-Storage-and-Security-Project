@@ -225,15 +225,6 @@ const Home = () => {
     </Grid>
   );
 
-  const test = (
-    <Button variant='contained' onClick={async () => {
-      const respoinse = await fetch('/api/users/superUser');
-      const data = await respoinse.json();
-
-      console.log(data);
-    }}>Test</Button>
-  );
-
   return (
     <>
       {papers.length === 0 &&
@@ -243,7 +234,6 @@ const Home = () => {
       }
       {papers.length !== 0 && grid}
       {papers.length !== 0 && papersGraph}
-      {test}
     </>
   )
 }
