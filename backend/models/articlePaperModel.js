@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { resourceTypes } from "@backend/utils";
+import { resourceTypes } from "@backend/constants";
 
 const Schema = mongoose.Schema
 const Types = Schema.Types

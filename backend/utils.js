@@ -1,20 +1,6 @@
 import connectDB from "./index"
-import ArticlePaper from "./models/articlePaperModel"
-import {data} from "@data/articles_papers"
-
-export const resourceTypes = [
-    "Articles And Papers",
-    "Blog",
-    "Company",
-    "Course",
-    "Event",
-    "Grant",
-    "Patent",
-    "Project",
-    "Simulation Tool",
-    "Software",
-    "You Tube"
-]
+import Blog from "./models/blogsModel"
+import {data} from "@data/blogs"
 
 export const addData = async() => {
     try{
@@ -22,16 +8,13 @@ export const addData = async() => {
         const insertData = data.map((item) => {
             return {
                 title: item["Title"],
-                topics: item["Topics"].split(", ").map((topic) => topic.trim()),
                 type: item["Type"],
-                authors: item["Authors"].split(", ").map((topic) => topic.trim()),
-                publishedDate: item["Published Date"],
-                source: item["Source"],
+                organization: item["Organization"],
                 link: item["Link"]
             }
         })
-        await ArticlePaper.insertMany(insertData)
-        // await ArticlePaper.deleteMany({})
+        await Blog.insertMany(insertData)
+        // await Blog.deleteMany({})
     }catch(error){
         throw error
     }

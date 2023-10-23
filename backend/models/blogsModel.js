@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+import { resourceTypes } from "@backend/constants";
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 
@@ -11,7 +13,8 @@ const blogSchema = new Schema({
     },
     type: {
         type: Types.String,
-        required: true
+        required: true,
+        enum: resourceTypes
     },
     organization: {
         type: Types.String,
