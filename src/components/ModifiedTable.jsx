@@ -6,6 +6,9 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { RxCross2 } from 'react-icons/rx';
 import { LoadingButton } from "@mui/lab";
+import { GridToolbarContainer, useGridApiContext } from "@mui/x-data-grid";
+import { MdDelete } from "react-icons/md";
+import { HiPencil } from "react-icons/hi2";
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -204,23 +207,81 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
         </Box>
     );
 
-    const addButton = (
-        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-                variant='text'
-                onClick={() => handleClickOpen()}
-                disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
-            >
-                <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
-                Add New
-            </Button>
-        </Box>
-    );
+    function CustomToolbar() {
+        const apiRef = useGridApiContext();
+
+        const handleDeleteItems = async () => {
+            const selectedRows = apiRef.current.getSelectedRows();
+
+            const requests = [];
+            selectedRows.forEach((item) => {
+                requests.push(fetch(`${api[category]}/${item._id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }));
+            });
+
+            const response = await Promise.all(requests);
+
+            if (response.every((item) => item.ok)) {
+                setFetchAgain(prev => !prev);
+                setSnackbar({
+                    open: true,
+                    message: `${category}/s deleted successfully`,
+                    type: 'success'
+                })
+            }
+            else {
+                console.error('delete failed: ', response);
+                setSnackbar({
+                    open: true,
+                    message: `Error deleting ${category}, try again with correct inputs!`,
+                    type: 'error'
+                })
+            }
+        }
+
+        return (
+            <GridToolbarContainer>
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '.5rem' }}>
+                    <Button
+                        variant='outlined'
+                        onClick={() => handleClickOpen()}
+                        disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
+                    >
+                        <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
+                        Add New
+                    </Button>
+
+                    <Button
+                        variant='text'
+                        onClick={() => handleDeleteItems()}
+                        disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
+                    >
+                        <MdDelete style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
+                        Delete item/s
+                    </Button>
+
+                    {/* <Button
+                        variant='text'
+                        onClick={() => handleClickOpen()}
+                        disabled={apiRef.current.getSelectedRows().length === 1}
+                    >
+                        <HiPencil style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
+                        Edit item
+                    </Button> */}
+                </Box>
+            </GridToolbarContainer>
+        );
+    }
+
 
     const dataGrid = (
         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-            {addButton}
-            <Box width={'100%'} height={'calc(100vh - 5.28125rem)'}>
+            {/* {addButton} */}
+            <Box width={'100%'} height={'calc(100vh - 3rem)'}>
                 <StripedDataGrid
                     rows={data}
                     columns={columns}
@@ -233,7 +294,12 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                     }}
                     pageSizeOptions={[11, 25, 50]}
                     getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}
-                    sx={{ flexGrow: '1' }} />
+                    sx={{ flexGrow: '1' }}
+                    slots={{
+                        toolbar: CustomToolbar,
+                    }}
+                    checkboxSelection
+                />
             </Box>
         </Box>
     );
