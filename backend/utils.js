@@ -1,6 +1,6 @@
 import connectDB from "./index"
-import Software from "./models/softwareModel"
-import {data} from "@data/softwares"
+import YoutubeContent from "./models/youtubeContentModel"
+import {data} from "@data/youtube"
 
 export const addData = async() => {
     try{
@@ -8,13 +8,13 @@ export const addData = async() => {
         const insertData = data.map((item) => {
             return {
                 title: item["Title"],
-                description: item["Description"],
-                type: "Software",
+                channel: item["channel"],
+                type: "You Tube",
                 link: item["Link"]
             }
     })
-        await Software.insertMany(insertData)
-        // await Software.deleteMany({})
+        await YoutubeContent.insertMany(insertData)
+        // await YoutubeContent.deleteMany({})
     }catch(error){
         throw error
     }
