@@ -1,9 +1,9 @@
 import connectDB from "./index"
 import Company from "./models/companyModel"
-import {data} from "@data/companies"
+import { data } from "@data/companies"
 
-export const addData = async() => {
-    try{
+export const addData = async () => {
+    try {
         await connectDB()
         const insertData = data.map((item) => {
             return {
@@ -12,10 +12,9 @@ export const addData = async() => {
                 type: "Company",
                 description: item["Description"]
             }
-    })
+        })
         await Company.insertMany(insertData)
-        // await Company.deleteMany({})
-    }catch(error){
+    } catch (error) {
         throw error
     }
 }

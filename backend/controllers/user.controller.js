@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "../models/usersModel";
+import User from "../models/userModel";
 import { getToken } from "next-auth/jwt";
 
 export const getAllUsers = async (req, res) => {

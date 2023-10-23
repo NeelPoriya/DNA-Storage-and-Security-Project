@@ -1,6 +1,6 @@
 const { default: NextAuth } = require("next-auth/next");
 import connectDB from "@backend/index";
-import User from "@backend/models/usersModel";
+import User from "@backend/models/userModel";
 import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
