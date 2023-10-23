@@ -10,7 +10,7 @@ const CompaniesPage = () => {
   const getCompanies = async () => {
     const response = await fetch("/api/companies");
     const FinalData = await response.json();
-    setCompanies(FinalData.data);
+    setCompanies(FinalData);
   };
 
   useEffect(() => {

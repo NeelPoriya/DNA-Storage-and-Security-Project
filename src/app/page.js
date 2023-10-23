@@ -34,10 +34,10 @@ const extractSourceFrequencyArrayFromPapersArray = (papers) => {
   const sourceFrequency = {};
 
   papers.forEach((paper) => {
-    if (sourceFrequency[paper['Source']] === undefined) {
-      sourceFrequency[paper['Source']] = 1;
+    if (sourceFrequency[paper['source']] === undefined) {
+      sourceFrequency[paper['source']] = 1;
     } else {
-      sourceFrequency[paper['Source']] += 1;
+      sourceFrequency[paper['source']] += 1;
     }
   });
 
@@ -94,17 +94,18 @@ const Home = () => {
         return response.json();
       }));
 
-      setPapers(jsonData[0].data);
-      setBlogs(jsonData[1].data);
-      setCompanies(jsonData[2].data);
-      setCourses(jsonData[3].data);
-      setEvents(jsonData[4].data);
-      setGrants(jsonData[5].data);
-      setPatents(jsonData[6].data);
-      setProjects(jsonData[7].data);
-      setTools(jsonData[8].data);
-      setVideos(jsonData[9].data);
-      setSoftwares(jsonData[10].data);
+      setPapers(jsonData[0]);
+      setBlogs(jsonData[1]);
+      setCompanies(jsonData[2]);
+      setCourses(jsonData[3]);
+      setEvents(jsonData[4]);
+      setGrants(jsonData[5]);
+      setPatents(jsonData[6]);
+      setProjects(jsonData[7]);
+      setTools(jsonData[8]);
+      setVideos(jsonData[9]);
+      setSoftwares(jsonData[10]);
+
     } catch (e) {
       console.log(e);
     }

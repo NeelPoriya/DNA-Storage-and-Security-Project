@@ -5,43 +5,43 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Title',
+        field: 'title',
         headerName: 'Title',
         width: 500
     },
     {
-        field: 'Topics',
+        field: 'topics',
         headerName: 'Topics',
         width: 250,
         editable: false
     },
     {
-        field: 'Type',
+        field: 'type',
         headerName: 'Type',
         width: 200,
         editable: false
     },
     {
-        field: 'Authors',
+        field: 'authors',
         headerName: 'Authors',
         width: 200,
         editable: false
     },
     {
-        field: 'Published Date',
+        field: 'publishedDate',
         headerName: 'Published Date',
         type: 'date',
         editable: false,
         width: 200
     },
     {
-        field: 'Source',
+        field: 'source',
         headerName: 'Source',
         editable: false,
         width: 200
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -58,11 +58,11 @@ const ResearchPapersPage = () => {
             const response = await fetch('/api/articles-papers');
             const data = await response.json();
 
-            const newData = data.data.map((d, i) => {
+            const newData = data.map((d, i) => {
                 return {
                     ...d,
-                    'id': i,
-                    'Published Date': new Date(d['Published Date'])
+                    'id': d._id,
+                    'publishedDate': new Date(d['publishedDate'])
                 };
             });
 

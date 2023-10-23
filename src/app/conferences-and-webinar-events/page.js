@@ -6,24 +6,24 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Event Name',
+        field: 'name',
         headerName: 'Event Name',
         width: 600
     },
     {
-        field: 'Type',
+        field: 'type',
         headerName: 'Type',
         width: 150,
         editable: false
     },
     {
-        field: 'Organization',
-        headerName: 'Organization',
+        field: 'organizations',
+        headerName: 'Organizations',
         width: 550,
         editable: false
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -43,10 +43,10 @@ const EventsPage = () => {
             const response = await fetch('/api/events');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'id': idx
+                    'id': item._id
                 };
             })
 

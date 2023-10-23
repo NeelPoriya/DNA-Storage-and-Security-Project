@@ -6,24 +6,24 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Title',
+        field: 'title',
         headerName: 'Title',
         width: 500
     },
     {
-        field: 'Type',
+        field: 'type',
         headerName: 'Type',
         width: 250,
         editable: false
     },
     {
-        field: 'Organization',
+        field: 'organization',
         headerName: 'Organization',
         width: 250,
         editable: false
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -43,10 +43,10 @@ const BlogsPage = () => {
             const response = await fetch('/api/blogs');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'id': idx
+                    'id': item._id
                 };
             })
 

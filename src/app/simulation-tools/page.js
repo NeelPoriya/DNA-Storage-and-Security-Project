@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Name',
+        field: 'name',
         headerName: 'Name',
         width: 250,
         editable: false,
@@ -15,12 +15,12 @@ const columns = [
         }
     },
     {
-        field: 'Type',
+        field: 'type',
         headerName: 'Type',
         width: 250
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -40,10 +40,10 @@ const SimulationToolsPage = () => {
             const response = await fetch('/api/simulation-tools');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'id': idx
+                    'id': item._id
                 };
             })
 

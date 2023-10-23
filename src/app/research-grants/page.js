@@ -6,18 +6,24 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Organization',
+        field: 'organization',
         headerName: 'Organization',
         width: 500
     },
     {
-        field: 'Amount of Fund(in USD)',
+        field: 'amountOfFund',
         headerName: 'Amount of Fund(in USD)',
         width: 250,
         editable: false
     },
     {
-        field: 'Link',
+        field: 'type',
+        headerName: 'Type',
+        width: 250,
+        editable: false
+    },
+    {
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -35,14 +41,14 @@ const GrantsPage = () => {
             const response = await fetch('/api/grants');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'Amount of Fund(in USD)': item['Amount of Fund(in USD)'].toLocaleString('en-US', {
+                    'amountOfFund': item['amountOfFund'].toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                     }),
-                    'id': idx
+                    'id': item._id
                 };
             })
 

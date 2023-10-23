@@ -12,6 +12,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 export default function ModifiedTable({ data, columns, category }) {
+
     // provides the session object to the client
     const { data: session } = useSession();
 
@@ -28,15 +29,13 @@ export default function ModifiedTable({ data, columns, category }) {
     const [canEdit, setCanEdit] = useState(undefined);
 
     // switch for request dialog box
-    const [requestDialogOpen, setRequestDialogOpen] = useState(undefined);
+    const [requestDialogOpen, setRequestDialogOpen] = useState(false);
 
     // stores userStatus data
     const [userStatus, setUserStatus] = useState(undefined);
 
     // request loading
     const [requestLoading, setRequestLoading] = useState(undefined);
-
-    console.log(userStatus);
 
     const fetchUserDetails = async () => {
         const response = await fetch('/api/users/superAdmin');
