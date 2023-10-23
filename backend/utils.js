@@ -1,20 +1,20 @@
 import connectDB from "./index"
-import Course from "./models/courseModel"
-import {data} from "@data/courses"
+import Grant from "./models/grantModel"
+import {data} from "@data/grants"
 
 export const addData = async() => {
     try{
         await connectDB()
         const insertData = data.map((item) => {
             return {
-                title: item["Title"],
-                type: item["Type"],
-                authors: item["Authors"].split(", ").map(str => str.trim()),
+                organization: item["Organization"],
+                type: "Grant",
+                amountOfFund: item["Amount of Fund(in USD)"],
                 link: item["Link"]
             }
         })
-        await Course.insertMany(insertData)
-        // await Course.deleteMany({})
+        await Grant.insertMany(insertData)
+        // await Grant.deleteMany({})
     }catch(error){
         throw error
     }
