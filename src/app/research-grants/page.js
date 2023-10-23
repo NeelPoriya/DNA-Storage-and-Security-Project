@@ -35,6 +35,7 @@ const columns = [
 const GrantsPage = () => {
 
     const [grants, setGrants] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchGrants() {
@@ -56,10 +57,10 @@ const GrantsPage = () => {
         }
 
         fetchGrants();
-    }, []);
+    }, [fetchAgain]);
 
 
-    return <ModifiedTable data={grants} columns={columns} category={'Research Grant'} />
+    return <ModifiedTable data={grants} columns={columns} category={'Research Grant'} setFetchAgain={setFetchAgain} />
 }
 
 export default GrantsPage 

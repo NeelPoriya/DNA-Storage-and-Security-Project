@@ -37,6 +37,7 @@ const columns = [
 const EventsPage = () => {
 
     const [events, setEvents] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchEvents() {
@@ -54,9 +55,9 @@ const EventsPage = () => {
         }
 
         fetchEvents();
-    }, []);
+    }, [fetchAgain]);
 
-    return <ModifiedTable data={events} columns={columns} category={'Event'} />
+    return <ModifiedTable data={events} columns={columns} category={'Event'} setFetchAgain={setFetchAgain} />
 }
 
 export default EventsPage 

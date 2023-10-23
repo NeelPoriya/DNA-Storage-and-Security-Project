@@ -37,6 +37,7 @@ const columns = [
 const CoursesPage = () => {
 
     const [courses, setCourses] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchCourses() {
@@ -54,9 +55,9 @@ const CoursesPage = () => {
         }
 
         fetchCourses();
-    }, []);
+    }, [fetchAgain]);
 
-    return <ModifiedTable data={courses} columns={columns} category={'Course'} />
+    return <ModifiedTable data={courses} columns={columns} category={'Course'} setFetchAgain={setFetchAgain} />
 }
 
 export default CoursesPage 

@@ -40,6 +40,7 @@ const columns = [
 const ProjectsPage = () => {
 
     const [projects, setProjects] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchProjects() {
@@ -57,10 +58,10 @@ const ProjectsPage = () => {
         }
 
         fetchProjects();
-    }, []);
+    }, [fetchAgain]);
 
 
-    return <ModifiedTable data={projects} columns={columns} category={'Project'} />
+    return <ModifiedTable data={projects} columns={columns} category={'Project'} setFetchAgain={setFetchAgain} />
 }
 
 export default ProjectsPage 

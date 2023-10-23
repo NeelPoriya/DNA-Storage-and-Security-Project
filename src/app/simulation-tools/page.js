@@ -34,6 +34,7 @@ const columns = [
 const SimulationToolsPage = () => {
 
     const [simulationTools, setSimulationTools] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchSimulationTools() {
@@ -51,9 +52,9 @@ const SimulationToolsPage = () => {
         }
 
         fetchSimulationTools();
-    }, []);
+    }, [fetchAgain]);
 
-    return <ModifiedTable data={simulationTools} columns={columns} category={'Simulation Tool'} />
+    return <ModifiedTable data={simulationTools} columns={columns} category={'Simulation Tool'} setFetchAgain={setFetchAgain} />
 }
 
 export default SimulationToolsPage 

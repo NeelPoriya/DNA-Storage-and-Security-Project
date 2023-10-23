@@ -52,6 +52,7 @@ const columns = [
 
 const ResearchPapersPage = () => {
     const [papers, setPapers] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchPapers() {
@@ -70,9 +71,9 @@ const ResearchPapersPage = () => {
         }
 
         fetchPapers();
-    }, []);
+    }, [fetchAgain]);
 
-    return <ModifiedTable data={papers} columns={columns} category={'Research Paper'} />;
+    return <ModifiedTable data={papers} columns={columns} category={'Research Paper'} setFetchAgain={setFetchAgain} />;
 }
 
 export default ResearchPapersPage;

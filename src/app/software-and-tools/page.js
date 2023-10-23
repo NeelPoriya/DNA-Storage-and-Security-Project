@@ -6,18 +6,18 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Title',
+        field: 'title',
         headerName: 'Title',
         width: 250
     },
     {
-        field: 'Description',
+        field: 'description',
         headerName: 'Description',
         width: 500,
         editable: false
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -31,16 +31,17 @@ const columns = [
 const SoftwaresPage = () => {
 
     const [softwares, setSoftwares] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchVideos() {
             const response = await fetch('/api/softwares');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'id': idx
+                    'id': item._id
                 };
             })
 
@@ -51,7 +52,7 @@ const SoftwaresPage = () => {
     }, []);
 
 
-    return <ModifiedTable data={softwares} columns={columns} category={'Software/Tool'} />
+    return <ModifiedTable data={softwares} columns={columns} category={'Software/Tool'} setFetchAgain={setFetchAgain} />
 }
 
 export default SoftwaresPage 

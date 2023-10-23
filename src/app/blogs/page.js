@@ -37,6 +37,7 @@ const columns = [
 const BlogsPage = () => {
 
     const [blogs, setBlogs] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchBlogs() {
@@ -54,9 +55,9 @@ const BlogsPage = () => {
         }
 
         fetchBlogs();
-    }, []);
+    }, [fetchAgain]);
 
-    return <ModifiedTable data={blogs} columns={columns} category={'Blog'} />
+    return <ModifiedTable data={blogs} columns={columns} category={'Blog'} setFetchAgain={setFetchAgain} />
 }
 
 export default BlogsPage 

@@ -15,6 +15,7 @@ export const createData = async (Model, req, res) => {
         const data = await Model.create(req.body)
         return res.status(201).json(data);
     } catch (error) {
+        console.log(error);
         if (error instanceof mongoose.Error) {
             return res.status(400).json({ msg: error.message })
         }

@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 
 const columns = [
     {
-        field: 'Title',
+        field: 'title',
         headerName: 'Title',
         width: 500
     },
     {
-        field: 'Type',
+        field: 'type',
         headerName: 'Type',
         width: 150,
         editable: false
@@ -23,7 +23,7 @@ const columns = [
         editable: false
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: false,
         renderCell: (params) => {
@@ -37,16 +37,17 @@ const columns = [
 const YoutubePage = () => {
 
     const [videos, setVideos] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchVideos() {
             const response = await fetch('/api/youtube');
             const data = await response.json();
 
-            const newData = data.data.map((item, idx) => {
+            const newData = data.map((item, idx) => {
                 return {
                     ...item,
-                    'id': idx
+                    'id': item._id
                 };
             })
 
@@ -56,7 +57,7 @@ const YoutubePage = () => {
         fetchVideos();
     }, []);
 
-    return <ModifiedTable data={videos} columns={columns} category={'Video'} />
+    return <ModifiedTable data={videos} columns={columns} category={'Video'} setFetchAgain={setFetchAgain} />
 }
 
 export default YoutubePage 

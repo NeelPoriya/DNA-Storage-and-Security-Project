@@ -11,7 +11,54 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ModifiedTable({ data, columns, category }) {
+const api = {
+    'Research Paper': '/api/articles-papers',
+    'Blog': '/api/blogs',
+    'Event': '/api/events',
+    'Course': '/api/courses',
+    'Patent': '/api/patents',
+    'Project': '/api/projects',
+    'Research Grant': '/api/grants',
+    'Simulation Tool': '/api/simulation-tools',
+    'Software/Tool': '/api/softwares',
+    'Video': '/api/youtube',
+};
+
+const resourceTypes = {
+    'Research Paper': "Articles And Papers",
+    'Blog': "Blog",
+    'Company': "Company",
+    'Course': "Course",
+    'Event': "Event",
+    'Research Grant': "Grant",
+    'Patent': "Patent",
+    'Project': "Project",
+    'Simulation Tool': "Simulation Tool",
+    'Software/Tool': "Software",
+    'Video': "You Tube"
+}
+
+const placeholders = {
+    'title': 'e.g, DNA Security in Cloud Computing',
+    'topics': 'e.g, Cloud Computing, DNA Security',
+    'authors': 'e.g, John Doe, Jane Doe',
+    'publishedDate': 'e.g, 2021-10-12',
+    'source': 'e.g, IEEE',
+    'link': 'e.g, https://www.google.com/',
+    'organizations': 'e.g, IEEE, ACM',
+    'name': 'e.g, IEEE',
+    'description': 'e.g, IEEE is the world\'s largest technical professional organization dedicated to advancing technology for the benefit of humanity.',
+    'category': 'e.g, Conference',
+    'date': 'e.g, 2021-10-12',
+    'location': 'e.g, Virtual',
+    'eligibility': 'e.g, All',
+    'organization': 'e.g, IEEE',
+    'fundingAgency': 'e.g, IEEE',
+    'amountOfFund': 'e.g, 1000000',
+    'channel': 'e.g, IEEE',
+}
+
+export default function ModifiedTable({ data, columns, category, setFetchAgain }) {
 
     // provides the session object to the client
     const { data: session } = useSession();
@@ -23,7 +70,7 @@ export default function ModifiedTable({ data, columns, category }) {
     const [input, setInput] = useState({});
 
     // switch for snackbar
-    const [snackbar, setSnackbar] = useState(false);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', type: '' });
 
     // access control for add-item dialog box
     const [canEdit, setCanEdit] = useState(undefined);
@@ -116,6 +163,41 @@ export default function ModifiedTable({ data, columns, category }) {
         }
     }
 
+    const addItem = async () => {
+        console.log(input, category);
+        const response = await fetch(api[category], {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...input,
+                type: resourceTypes[category],
+                // publishedDate: new Date(input.publishedDate).toISOString(),
+
+            })
+        });
+
+        if (response.ok) {
+            setFetchAgain(prev => !prev);
+            clearAllInput();
+            setSnackbar({
+                open: true,
+                message: `${category} added successfully`,
+                type: 'success'
+            })
+            setAccessDialogOpen(false);
+        }
+        else {
+            console.error('add failed: ', response);
+            setSnackbar({
+                open: true,
+                message: `Error adding ${category}, try again with correct inputs!`,
+                type: 'error'
+            })
+        }
+    }
+
     const progress = (
         <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
             {data.length === 0 && <CircularProgress />}
@@ -169,11 +251,23 @@ export default function ModifiedTable({ data, columns, category }) {
             <DialogTitle>{'Add ' + category}</DialogTitle>
             <DialogContent>
                 {columns.map((item, key) => {
+                    if (item.field === 'type') {
+                        return <TextField
+                            type="text"
+                            disabled
+                            sx={{ display: 'block', margin: '1rem 0' }}
+                            label={item.headerName}
+                            placeholder={item.field}
+                            key={key}
+                            fullWidth
+                            value={`${category}`}
+                        />
+                    }
                     return <TextField
                         type={'text'}
                         sx={{ display: 'block', margin: '1rem 0' }}
-                        label={item.field}
-                        placeholder={item.field}
+                        label={item.headerName}
+                        placeholder={placeholders[item.field]}
                         key={key}
                         fullWidth
                         onChange={(e) => handleChangeInput(item.field, e.target.value)}
@@ -182,7 +276,7 @@ export default function ModifiedTable({ data, columns, category }) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button variant="contained" onClick={() => { console.log(input); clearAllInput() }}>Add</Button>
+                <Button variant="contained" onClick={addItem}>Add</Button>
             </DialogActions>
         </Dialog >
     );
@@ -213,9 +307,9 @@ export default function ModifiedTable({ data, columns, category }) {
     )
 
     const toast = (
-        <Snackbar open={snackbar} autoHideDuration={6000} onClose={handleSnackbarClose}>
-            <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: '100%', fontWeight: 'bold', color: 'darkslateblue' }}>
-                The {category} will be added the moment my dear friends implement the backend!
+        <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity={snackbar.type} sx={{ width: '100%', fontWeight: 'bold', color: 'darkslateblue' }}>
+                {snackbar.message}
             </Alert>
         </Snackbar>
     );

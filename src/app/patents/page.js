@@ -36,6 +36,7 @@ const columns = [
 const PatentsPage = () => {
 
     const [patents, setPatents] = useState([]);
+    const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
         async function fetchPatents() {
@@ -53,10 +54,10 @@ const PatentsPage = () => {
         }
 
         fetchPatents();
-    }, []);
+    }, [fetchAgain]);
 
 
-    return <ModifiedTable data={patents} columns={columns} category={'Patent'} />
+    return <ModifiedTable data={patents} columns={columns} category={'Patent'} setFetchAgain={setFetchAgain} />
 }
 
 export default PatentsPage 
