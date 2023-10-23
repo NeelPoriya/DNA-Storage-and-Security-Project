@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
+import { resourceTypes } from "@backend/constants";
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 
 
-const courseAndTutorialSchema = new Schema({
+const courseSchema = new Schema({
 
     title: {
         type: Types.String,
@@ -12,7 +14,8 @@ const courseAndTutorialSchema = new Schema({
     },
     type: {
         type: Types.String,
-        required: true
+        required: true,
+        enum: resourceTypes
     },
     authors: {
         type: [Types.String],
@@ -24,11 +27,11 @@ const courseAndTutorialSchema = new Schema({
     }
 })
 
-let CourseAndTutorial;
+let Course;
 try {
-    CourseAndTutorial = mongoose.model('CourseAndTutorial');
+    Course = mongoose.model('Course');
 } catch (err) {
-    CourseAndTutorial = mongoose.model('CourseAndTutorial', courseAndTutorialSchema, 'courses_tutorials');
+    Course = mongoose.model('Course', courseSchema, 'courses');
 }
 
-export default CourseAndTutorial;
+export default Course;
