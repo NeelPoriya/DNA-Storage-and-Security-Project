@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
+import { resourceTypes } from "@backend/constants";
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 
 
 const patentSchema = new Schema({
-
     title: {
-        type: Types.String
+        type: Types.String,
+        required: true
     },
     authors: {
         type: [Types.String],
@@ -16,8 +18,12 @@ const patentSchema = new Schema({
     link: {
         type: Types.String,
         required: true
-    }
-
+    },
+    type: {
+        type: Types.String,
+        required: true,
+        enum: resourceTypes
+    },
 
 })
 
@@ -25,7 +31,7 @@ let Patents;
 try {
     Patents = mongoose.model('Patent');
 } catch (err) {
-    Patents = mongoose.model('Patent', patentSchema,"patents");
+    Patents = mongoose.model('Patent', patentSchema, "patents");
 }
 
 export default Patents;

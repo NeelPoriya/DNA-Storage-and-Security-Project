@@ -6,10 +6,13 @@ const route = async (req, res) => {
     try {
         await connectDB()
         if (req.method === "GET") {
-            await controller.getAllData(Patent, req, res)
+            await controller.getData(Patent, req, res)
         }
-        else if (req.method === "POST") {
-            await controller.createData(Patent, req, res)
+        else if (req.method === "PUT") {
+            await controller.updateData(Patent, req, res)
+        }
+        else if (req.method === "DELETE") {
+            await controller.deleteData(Patent, req, res)
         }
         else {
             return res.status(405).json({ msg: "Method Not Allowed" })
@@ -18,7 +21,6 @@ const route = async (req, res) => {
         console.log(err)
         return res.status(500).json({ msg: "Internal Server Error" })
     }
-
 }
 
 export default route

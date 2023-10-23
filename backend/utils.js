@@ -1,20 +1,20 @@
 import connectDB from "./index"
-import Grant from "./models/grantModel"
-import {data} from "@data/grants"
+import Patent from "./models/patentModel"
+import {data} from "@data/patents"
 
 export const addData = async() => {
     try{
         await connectDB()
         const insertData = data.map((item) => {
             return {
-                organization: item["Organization"],
-                type: "Grant",
-                amountOfFund: item["Amount of Fund(in USD)"],
+                title: item["Title"],
+                type: "Patent",
+                authors: item["Organization / Authors"].split(", ").map(str => str.trim()),
                 link: item["Link"]
             }
         })
-        await Grant.insertMany(insertData)
-        // await Grant.deleteMany({})
+        await Patent.insertMany(insertData)
+        // await Patent.deleteMany({})
     }catch(error){
         throw error
     }
