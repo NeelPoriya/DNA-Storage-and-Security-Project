@@ -226,6 +226,15 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                 }));
             });
 
+            if (!canEdit) {
+                setSnackbar({
+                    open: true,
+                    message: `You are not authorized to delete ${category}`,
+                    type: 'error'
+                })
+                return;
+            }
+
             if (requests.length === 0) {
                 setSnackbar({
                     open: true,
