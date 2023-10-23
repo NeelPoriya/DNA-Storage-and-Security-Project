@@ -1,6 +1,6 @@
 import connectDB from "./index"
-import Patent from "./models/patentModel"
-import {data} from "@data/patents"
+import Project from "./models/projectModel"
+import {data} from "@data/projects"
 
 export const addData = async() => {
     try{
@@ -8,13 +8,14 @@ export const addData = async() => {
         const insertData = data.map((item) => {
             return {
                 title: item["Title"],
-                type: "Patent",
-                authors: item["Organization / Authors"].split(", ").map(str => str.trim()),
+                type: "Project",
+                fundingAgency: item["Funding Agency"],
+                organization: item["Organization"],
                 link: item["Link"]
             }
         })
-        await Patent.insertMany(insertData)
-        // await Patent.deleteMany({})
+        await Project.insertMany(insertData)
+        // await Project.deleteMany({})
     }catch(error){
         throw error
     }
