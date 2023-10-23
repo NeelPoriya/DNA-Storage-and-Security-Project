@@ -1,20 +1,20 @@
 import connectDB from "./index"
-import YoutubeContent from "./models/youtubeContentModel"
-import {data} from "@data/youtube"
+import Company from "./models/companyModel"
+import {data} from "@data/companies"
 
 export const addData = async() => {
     try{
         await connectDB()
         const insertData = data.map((item) => {
             return {
-                title: item["Title"],
-                channel: item["channel"],
-                type: "You Tube",
-                link: item["Link"]
+                organization: item["Organization"],
+                logoPath: item["path"],
+                type: "Company",
+                description: item["Description"]
             }
     })
-        await YoutubeContent.insertMany(insertData)
-        // await YoutubeContent.deleteMany({})
+        await Company.insertMany(insertData)
+        // await Company.deleteMany({})
     }catch(error){
         throw error
     }
