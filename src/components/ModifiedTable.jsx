@@ -212,7 +212,6 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     function CustomToolbar() {
         const apiRef = useGridApiContext();
-        if (!canEdit) return null;
 
         const handleDeleteItems = async () => {
             const selectedRows = apiRef.current.getSelectedRows();
