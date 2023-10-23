@@ -7,43 +7,44 @@ const columns = [
     {
         field: 'title',
         headerName: 'Title',
-        width: 500
+        width: 500,
+        editable: true
     },
     {
         field: 'topics',
         headerName: 'Topics',
         width: 250,
-        editable: false
+        editable: true
     },
     {
         field: 'type',
         headerName: 'Type',
         width: 200,
-        editable: false
+        editable: true
     },
     {
         field: 'authors',
         headerName: 'Authors',
         width: 200,
-        editable: false
+        editable: true
     },
     {
         field: 'publishedDate',
         headerName: 'Published Date',
         type: 'date',
-        editable: false,
+        editable: true,
         width: 200
     },
     {
         field: 'source',
         headerName: 'Source',
-        editable: false,
+        editable: true,
         width: 200
     },
     {
         field: 'link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>Open</Button>;
         }

@@ -1,7 +1,6 @@
 'use client'
 import ModifiedTable from "@/components/ModifiedTable";
-import StripedDataGrid from "@/components/StripedDataGrid";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const columns = [
@@ -9,7 +8,7 @@ const columns = [
         field: 'name',
         headerName: 'Name',
         width: 250,
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <strong>{params['formattedValue']}</strong>
         }
@@ -17,12 +16,13 @@ const columns = [
     {
         field: 'type',
         headerName: 'Type',
-        width: 250
+        width: 250,
+        editable: false
     },
     {
         field: 'link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
                 Open

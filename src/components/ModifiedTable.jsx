@@ -1,7 +1,7 @@
 import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input, InputLabel, Slide, Snackbar, TextField, Typography } from "@mui/material";
 import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
 import StripedDataGrid from "./StripedDataGrid";
-import { forwardRef, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { RxCross2 } from 'react-icons/rx';
@@ -92,11 +92,14 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
         const data = await response.json();
 
         setCanEdit(
-            data.user.role === 'admin' ||
-            (data.user.role === 'user' && data.user.userStatus === 'accepted')
+            (data && data.user) &&
+            (
+                (data.user.role === 'admin') ||
+                (data.user.role === 'user' && data.user.userStatus === 'accepted')
+            )
         );
 
-        setUserStatus(data.user.userStatus);
+        setUserStatus(data && data.user && data.user.userStatus);
     }
 
     useEffect(() => {
@@ -272,15 +275,6 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                         <MdDelete style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                         Delete item/s
                     </Button>
-
-                    {/* <Button
-                        variant='text'
-                        onClick={() => handleClickOpen()}
-                        disabled={apiRef.current.getSelectedRows().length === 1}
-                    >
-                        <HiPencil style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
-                        Edit item
-                    </Button> */}
                 </Box>
             </GridToolbarContainer>
         );
@@ -308,6 +302,54 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                         toolbar: CustomToolbar,
                     }}
                     checkboxSelection
+                    processRowUpdate={
+                        useCallback(
+                            async (params) => {
+                                if (!canEdit) return;
+                                const newParam = { ...params };
+                                delete newParam._id;
+                                try {
+
+                                    const response = await fetch(`${api[category]}/${params.id}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            ...newParam
+                                        })
+                                    });
+
+                                    if (response.ok) {
+                                        setSnackbar({
+                                            open: true,
+                                            message: `${category} updated successfully`,
+                                            type: 'success'
+                                        })
+                                    }
+
+                                    return params;
+                                } catch (err) {
+                                    return new Error('Something went wrong')
+                                }
+                            }, [category, canEdit]
+                        )
+                    }
+                    onProcessRowUpdateError={
+                        useCallback(
+                            (error) => {
+                                if (error) {
+                                    console.log(error)
+                                    setSnackbar({
+                                        open: true,
+                                        message: `Error updating ${category}, try again with correct inputs!`,
+                                        type: 'error'
+                                    })
+                                }
+                            },
+                            [category]
+                        )
+                    }
                 />
             </Box>
         </Box>
