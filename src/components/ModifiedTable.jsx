@@ -223,6 +223,15 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                 }));
             });
 
+            if (requests.length === 0) {
+                setSnackbar({
+                    open: true,
+                    message: `Select at least one ${category} to delete`,
+                    type: 'info'
+                })
+                return;
+            }
+
             const response = await Promise.all(requests);
 
             if (response.every((item) => item.ok)) {
