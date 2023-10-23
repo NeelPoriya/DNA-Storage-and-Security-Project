@@ -1,21 +1,19 @@
 import connectDB from "./index"
-import Project from "./models/projectModel"
-import {data} from "@data/projects"
+import SimulationTool from "./models/simulationToolModel"
+import {data} from "@data/simulation_tools"
 
 export const addData = async() => {
     try{
         await connectDB()
         const insertData = data.map((item) => {
             return {
-                title: item["Title"],
-                type: "Project",
-                fundingAgency: item["Funding Agency"],
-                organization: item["Organization"],
+                name: item["Name"],
+                type: "Simulation Tool",
                 link: item["Link"]
             }
         })
-        await Project.insertMany(insertData)
-        // await Project.deleteMany({})
+        await SimulationTool.insertMany(insertData)
+        // await SimulationTool.deleteMany({})
     }catch(error){
         throw error
     }

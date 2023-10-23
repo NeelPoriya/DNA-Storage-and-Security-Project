@@ -1,18 +1,20 @@
 import mongoose from "mongoose";
 
+import { resourceTypes } from "@backend/constants";
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 
 
 const simulationToolSchema = new Schema({
-
-    Name: {
+    name: {
         type: Types.String,
         required: true
     },
     type: {
         type: Types.String,
-        required: true
+        required: true,
+        enum: resourceTypes
     },
     link: {
         type: Types.String,
