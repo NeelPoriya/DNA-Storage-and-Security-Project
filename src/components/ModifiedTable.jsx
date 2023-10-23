@@ -212,6 +212,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     function CustomToolbar() {
         const apiRef = useGridApiContext();
+        if (!canEdit) return null;
 
         const handleDeleteItems = async () => {
             const selectedRows = apiRef.current.getSelectedRows();
@@ -291,11 +292,11 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                     initialState={{
                         pagination: {
                             paginationModel: {
-                                pageSize: 11,
+                                pageSize: canEdit ? 11 : 12,
                             },
                         },
                     }}
-                    pageSizeOptions={[11, 25, 50]}
+                    pageSizeOptions={[canEdit ? 11 : 12, 25, 50]}
                     getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}
                     sx={{ flexGrow: '1' }}
                     slots={{
