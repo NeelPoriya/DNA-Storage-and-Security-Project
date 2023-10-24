@@ -3,7 +3,7 @@ import NavBar from '@/components/NavBar'
 import styles from './page.module.css';
 import './globals.css'
 import { Inter, Raleway } from 'next/font/google'
-import { ThemeProvider, createTheme } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { SessionProvider } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'] })

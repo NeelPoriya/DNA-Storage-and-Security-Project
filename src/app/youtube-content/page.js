@@ -1,7 +1,6 @@
 'use client'
 import ModifiedTable from "@/components/ModifiedTable";
-import StripedDataGrid from "@/components/StripedDataGrid";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const columns = [

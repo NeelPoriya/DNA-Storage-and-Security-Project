@@ -69,7 +69,9 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     const [accessDialogOpen, setAccessDialogOpen] = useState(false);
 
     // variable for storing input values in a single object
-    const [input, setInput] = useState({});
+    const [input, setInput] = useState({
+        'publishedDate': new Date().toISOString().slice(0, 10).toString(),
+    });
 
     // switch for snackbar
     const [snackbar, setSnackbar] = useState({ open: false, message: '', type: 'success' });
