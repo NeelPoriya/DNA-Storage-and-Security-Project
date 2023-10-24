@@ -281,25 +281,25 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
         return (
             <GridToolbarContainer>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '.5rem' }}>
-                    <Button
+                    <LoadingButton
                         variant='outlined'
-                        loading={addLoading.toString()}
+                        loading={addLoading}
                         onClick={() => handleClickOpen()}
                         disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
                         <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                         Add New
-                    </Button>
+                    </LoadingButton>
 
-                    <Button
+                    <LoadingButton
                         variant='text'
-                        loading={deleteLoading.toString()}
+                        loading={deleteLoading}
                         onClick={() => handleDeleteItems()}
                         disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
                         <MdDelete style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                         Delete item/s
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </GridToolbarContainer>
         );
