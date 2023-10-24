@@ -52,7 +52,7 @@ const columns = [
 ];
 
 const ResearchPapersPage = () => {
-    const [papers, setPapers] = useState([]);
+    const [papers, setPapers] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

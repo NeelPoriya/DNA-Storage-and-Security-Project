@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AiFillPlayCircle, AiOutlineCloudDownload } from "react-icons/ai";
 import { BsBuildingsFill, BsFillCalendarEventFill, BsFillGearFill, BsYoutube } from "react-icons/bs";
-import { FaStamp } from "react-icons/fa";
+import { FaBookOpen, FaStamp } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GoGoal } from "react-icons/go";
 import { ImBlogger } from "react-icons/im";
@@ -60,6 +60,7 @@ const Home = () => {
   const cardSpacing = sm ? 12 : md ? 6 : lg ? 4 : 3;
   const chartSpacing = sm ? 12 : md ? 12 : lg ? 12 : 6;
 
+  const [books, setBooks] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [events, setEvents] = useState([]);
@@ -84,7 +85,8 @@ const Home = () => {
       fetch('/api/projects'),
       fetch('/api/simulation-tools'),
       fetch('/api/youtube'),
-      fetch('/api/softwares')
+      fetch('/api/softwares'),
+      fetch('/api/books')
     ];
 
     try {
@@ -105,6 +107,7 @@ const Home = () => {
       setTools(jsonData[8]);
       setVideos(jsonData[9]);
       setSoftwares(jsonData[10]);
+      setBooks(jsonData[11]);
 
     } catch (e) {
       console.log(e);
@@ -172,6 +175,11 @@ const Home = () => {
         <Grid item xs={cardSpacing} sx={{ margin: `0 ${sm ? '2rem' : '0'}` }}>
           <Link href='/software-and-tools'>
             {Item('Total Software & Tools', softwares.length, '#EE5A24', <AiOutlineCloudDownload />)}
+          </Link>
+        </Grid>
+        <Grid item xs={cardSpacing} sx={{ margin: `0 ${sm ? '2rem' : '0'}` }}>
+          <Link href='/books'>
+            {Item('Total Books', books.length, '#EE5A24', <FaBookOpen />)}
           </Link>
         </Grid>
       </Grid>

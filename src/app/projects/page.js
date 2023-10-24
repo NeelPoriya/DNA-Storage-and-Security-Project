@@ -41,7 +41,7 @@ const columns = [
 
 const ProjectsPage = () => {
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

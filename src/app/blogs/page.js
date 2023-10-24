@@ -37,7 +37,7 @@ const columns = [
 
 const BlogsPage = () => {
 
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

@@ -33,7 +33,7 @@ const columns = [
 
 const SimulationToolsPage = () => {
 
-    const [simulationTools, setSimulationTools] = useState([]);
+    const [simulationTools, setSimulationTools] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

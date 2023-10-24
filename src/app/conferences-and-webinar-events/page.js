@@ -37,7 +37,7 @@ const columns = [
 
 const EventsPage = () => {
 
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

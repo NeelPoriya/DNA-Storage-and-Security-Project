@@ -36,7 +36,7 @@ const columns = [
 
 const YoutubePage = () => {
 
-    const [videos, setVideos] = useState([]);
+    const [videos, setVideos] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

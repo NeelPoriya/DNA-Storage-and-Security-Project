@@ -35,7 +35,7 @@ const columns = [
 
 const GrantsPage = () => {
 
-    const [grants, setGrants] = useState([]);
+    const [grants, setGrants] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

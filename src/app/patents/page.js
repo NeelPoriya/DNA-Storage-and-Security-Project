@@ -37,7 +37,7 @@ const columns = [
 
 const PatentsPage = () => {
 
-    const [patents, setPatents] = useState([]);
+    const [patents, setPatents] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {

@@ -5,7 +5,7 @@ import { IoMenu } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { GiReceiveMoney } from 'react-icons/gi';
-import { FaStamp } from 'react-icons/fa';
+import { FaBookOpen, FaStamp } from 'react-icons/fa';
 import { BsFillGearFill, BsFillCalendarEventFill, BsYoutube, BsBuildingsFill } from 'react-icons/bs';
 import { AiFillPlayCircle, AiOutlineCloudDownload } from 'react-icons/ai';
 import { ImBlogger } from 'react-icons/im';
@@ -71,6 +71,11 @@ const navigationItems = [
         text: 'Companies',
         icon: <BsBuildingsFill style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
         href: '/companies'
+    },
+    {
+        text: 'Books',
+        icon: <FaBookOpen style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/books',
     }
 ]
 

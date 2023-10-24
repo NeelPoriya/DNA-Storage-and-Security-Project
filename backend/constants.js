@@ -1,6 +1,7 @@
 export const resourceTypes = [
     "Articles And Papers",
     "Blog",
+    "Book",
     "Company",
     "Course",
     "Event",

@@ -24,6 +24,7 @@ const api = {
     'Simulation Tool': '/api/simulation-tools',
     'Software/Tool': '/api/softwares',
     'Video': '/api/youtube',
+    'Book': '/api/books'
 };
 
 const resourceTypes = {
@@ -37,7 +38,8 @@ const resourceTypes = {
     'Project': "Project",
     'Simulation Tool': "Simulation Tool",
     'Software/Tool': "Software",
-    'Video': "You Tube"
+    'Video': "You Tube",
+    'Book': "Book"
 }
 
 const placeholders = {
@@ -215,7 +217,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     const progress = (
         <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            {data.length === 0 && <CircularProgress />}
+            <CircularProgress />
         </Box>
     );
 
@@ -465,8 +467,8 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     return (
         <>
-            {data.length === 0 && progress}
-            {data.length !== 0 && dataGrid}
+            {data === null && progress}
+            {data !== null && dataGrid}
             {AddButtonFormInput}
             {RequestDialog}
             {toast}

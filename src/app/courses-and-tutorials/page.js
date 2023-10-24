@@ -37,7 +37,7 @@ const columns = [
 
 const CoursesPage = () => {
 
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState(null);
     const [fetchAgain, setFetchAgain] = useState(false);
 
     useEffect(() => {
