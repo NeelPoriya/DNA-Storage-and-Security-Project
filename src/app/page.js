@@ -74,40 +74,24 @@ const Home = () => {
   const [softwares, setSoftwares] = useState([]);
 
   async function fetchData() {
-    const promises = [
-      fetch('/api/articles-papers'),
-      fetch('/api/blogs'),
-      fetch('/api/companies'),
-      fetch('/api/courses'),
-      fetch('/api/events'),
-      fetch('/api/grants'),
-      fetch('/api/patents'),
-      fetch('/api/projects'),
-      fetch('/api/simulation-tools'),
-      fetch('/api/youtube'),
-      fetch('/api/softwares'),
-      fetch('/api/books')
-    ];
 
     try {
-      const responses = await Promise.all(promises);
+      const responses = await fetch('/api/all-data');
 
-      const jsonData = await Promise.all(responses.map((response) => {
-        return response.json();
-      }));
+      const jsonData = await responses.json();
 
-      setPapers(jsonData[0]);
-      setBlogs(jsonData[1]);
-      setCompanies(jsonData[2]);
-      setCourses(jsonData[3]);
-      setEvents(jsonData[4]);
-      setGrants(jsonData[5]);
-      setPatents(jsonData[6]);
-      setProjects(jsonData[7]);
-      setTools(jsonData[8]);
-      setVideos(jsonData[9]);
-      setSoftwares(jsonData[10]);
-      setBooks(jsonData[11]);
+      setPapers(jsonData.articlePapers);
+      setBlogs(jsonData.blogs);
+      setCompanies(jsonData.companies);
+      setCourses(jsonData.courses);
+      setEvents(jsonData.events);
+      setGrants(jsonData.grants);
+      setPatents(jsonData.patents);
+      setProjects(jsonData.projects);
+      setTools(jsonData.simulationTools);
+      setVideos(jsonData.youtubeContents);
+      setSoftwares(jsonData.softwares);
+      setBooks(jsonData.books);
 
     } catch (e) {
       console.log(e);
