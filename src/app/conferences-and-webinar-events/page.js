@@ -8,7 +8,8 @@ const columns = [
     {
         field: 'name',
         headerName: 'Event Name',
-        width: 600
+        width: 600,
+        editable: true,
     },
     {
         field: 'type',
@@ -20,12 +21,12 @@ const columns = [
         field: 'organizations',
         headerName: 'Organizations',
         width: 550,
-        editable: false
+        editable: true
     },
     {
         field: 'link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
                 {params['formattedValue'] === '' ? '🖕' : 'Open'}

@@ -51,10 +51,10 @@ export const updateData = async (Model, req, res) => {
         }
         return res.status(200).json(data);
     } catch (error) {
+        console.log(error);
         if (error instanceof mongoose.Error) {
             return res.status(400).json({ msg: error.message })
         }
-        console.log(error);
         return res.status(500).json({ msg: "Internal Server Error" })
     }
 }

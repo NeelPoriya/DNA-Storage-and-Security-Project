@@ -133,7 +133,7 @@ const NavBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {user && user.superAdmin &&
+                {user && user.role === 'admin' &&
                     <MenuItem key='Notifications' onClick={handleNavigationMenu}>
                         <Typography textAlign="center">Notifications</Typography>
 
@@ -143,7 +143,7 @@ const NavBar = () => {
                     <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
             </Menu>
-            {user && user.superAdmin && <NotificationDialog open={openNotificationDialog} setOpen={setOpenNotificationDialog} />}
+            {user && user.role === 'admin' && <NotificationDialog open={openNotificationDialog} setOpen={setOpenNotificationDialog} />}
         </Box>
         :
         <Button variant='inherit' onClick={() => signIn()}>

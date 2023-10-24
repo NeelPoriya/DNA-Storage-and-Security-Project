@@ -9,22 +9,24 @@ const columns = [
         field: 'title',
         headerName: 'Title',
         width: 500,
+        editable: true
     },
     {
         field: 'type',
         headerName: 'Type',
         width: 250,
+        editable: false
     },
     {
         field: 'authors',
         headerName: 'Organization / Authors',
         width: 250,
-        editable: false
+        editable: true
     },
     {
         field: 'Link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
                 {'Open'}

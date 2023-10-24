@@ -8,7 +8,8 @@ const columns = [
     {
         field: 'title',
         headerName: 'Title',
-        width: 500
+        width: 500,
+        editable: true
     },
     {
         field: 'type',
@@ -20,12 +21,12 @@ const columns = [
         field: 'channel',
         headerName: 'Channel',
         width: 200,
-        editable: false
+        editable: true
     },
     {
         field: 'link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>
                 Open

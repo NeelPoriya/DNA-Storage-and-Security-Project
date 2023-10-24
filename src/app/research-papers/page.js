@@ -20,7 +20,7 @@ const columns = [
         field: 'type',
         headerName: 'Type',
         width: 200,
-        editable: true
+        editable: false
     },
     {
         field: 'authors',

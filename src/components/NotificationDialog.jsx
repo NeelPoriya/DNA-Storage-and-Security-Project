@@ -12,11 +12,16 @@ const NotificationDialog = ({
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
+
         const fetchRequests = async () => {
-            const res = await fetch('/api/users/pendingRequest');
-            const data = await res.json();
-            console.log(data);
-            setRequests(data.requests);
+            try {
+                const res = await fetch('/api/users/pendingRequest');
+                const data = await res.json();
+
+                setRequests(data.requests);
+            } catch (err) {
+                console.log(err);
+            }
         }
 
         fetchRequests();

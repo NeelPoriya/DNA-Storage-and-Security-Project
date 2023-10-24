@@ -8,29 +8,31 @@ const columns = [
     {
         field: 'title',
         headerName: 'Title',
-        width: 500
+        width: 500,
+        editable: true
     },
     {
         field: 'type',
         headerName: 'Type',
-        width: 150
+        width: 150,
+        editable: false
     },
     {
         field: 'fundingAgency',
         headerName: 'Funding Agency',
         width: 500,
-        editable: false
+        editable: true
     },
     {
         field: 'organization',
         headerName: 'Organization',
         width: 500,
-        editable: false
+        editable: true
     },
     {
         field: 'link',
         headerName: 'Link',
-        editable: false,
+        editable: true,
         renderCell: (params) => {
             return <Button variant="contained" target="blank" href={params['formattedValue']}>Open</Button>;
         }

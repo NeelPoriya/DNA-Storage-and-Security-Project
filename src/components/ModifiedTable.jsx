@@ -8,7 +8,6 @@ import { RxCross2 } from 'react-icons/rx';
 import { LoadingButton } from "@mui/lab";
 import { GridToolbarContainer, useGridApiContext } from "@mui/x-data-grid";
 import { MdDelete } from "react-icons/md";
-import { HiPencil } from "react-icons/hi2";
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -73,7 +72,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     const [input, setInput] = useState({});
 
     // switch for snackbar
-    const [snackbar, setSnackbar] = useState({ open: false, message: '', type: '' });
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', type: 'success' });
 
     // access control for add-item dialog box
     const [canEdit, setCanEdit] = useState(undefined);
@@ -87,19 +86,25 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     // request loading
     const [requestLoading, setRequestLoading] = useState(undefined);
 
+    // delete loading
+    const [deleteLoading, setDeleteLoading] = useState(false);
+
+    // add Loading
+    const [addLoading, setAddLoading] = useState(false);
+
     const fetchUserDetails = async () => {
-        const response = await fetch('/api/users/superAdmin');
-        const data = await response.json();
+        const response = await fetch('/api/user');
+        const user = await response.json();
 
         setCanEdit(
-            (data && data.user) &&
+            (user) &&
             (
-                (data.user.role === 'admin') ||
-                (data.user.role === 'user' && data.user.userStatus === 'accepted')
+                (user.role === 'admin') ||
+                (user.role === 'user' && user.userStatus === 'accepted')
             )
         );
 
-        setUserStatus(data && data.user && data.user.userStatus);
+        setUserStatus(user && user.userStatus ? user.userStatus : 'none');
     }
 
     useEffect(() => {
@@ -125,7 +130,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     };
 
     const handleSnackbarOpen = () => {
-        setSnackbar(true);
+        setSnackbar(prev => { return { ...prev, open: true } });
     };
 
     const handleSnackbarClose = (event, reason) => {
@@ -133,7 +138,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
             return;
         }
 
-        setSnackbar(false);
+        setSnackbar(prev => { return { ...prev, open: false } });
     };
 
 
@@ -170,7 +175,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     }
 
     const addItem = async () => {
-        console.log(input, category);
+        setAddLoading(true);
         const response = await fetch(api[category], {
             method: 'POST',
             headers: {
@@ -183,6 +188,8 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
             })
         });
+
+        setAddLoading(false);
 
         if (response.ok) {
             setFetchAgain(prev => !prev);
@@ -214,6 +221,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
         const apiRef = useGridApiContext();
 
         const handleDeleteItems = async () => {
+            setDeleteLoading(true);
             const selectedRows = apiRef.current.getSelectedRows();
 
             const requests = [];
@@ -232,6 +240,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                     message: `You are not authorized to delete ${category}`,
                     type: 'error'
                 })
+                setDeleteLoading(false);
                 return;
             }
 
@@ -241,10 +250,13 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                     message: `Select at least one ${category} to delete`,
                     type: 'info'
                 })
+                setDeleteLoading(false);
                 return;
             }
 
             const response = await Promise.all(requests);
+
+            setDeleteLoading(false);
 
             if (response.every((item) => item.ok)) {
                 setFetchAgain(prev => !prev);
@@ -269,6 +281,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '.5rem' }}>
                     <Button
                         variant='outlined'
+                        loading={addLoading.toString()}
                         onClick={() => handleClickOpen()}
                         disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
@@ -278,6 +291,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
                     <Button
                         variant='text'
+                        loading={deleteLoading.toString()}
                         onClick={() => handleDeleteItems()}
                         disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
@@ -312,52 +326,47 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                     }}
                     checkboxSelection
                     processRowUpdate={
-                        useCallback(
-                            async (params) => {
-                                if (!canEdit) return;
+                        async (params) => {
+                            if (!canEdit) return;
+                            try {
                                 const newParam = { ...params };
                                 delete newParam._id;
-                                try {
 
-                                    const response = await fetch(`${api[category]}/${params.id}`, {
-                                        method: 'PUT',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            ...newParam
-                                        })
-                                    });
+                                const response = await fetch(`${api[category]}/${params.id}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        ...newParam
+                                    })
+                                });
 
-                                    if (response.ok) {
-                                        setSnackbar({
-                                            open: true,
-                                            message: `${category} updated successfully`,
-                                            type: 'success'
-                                        })
-                                    }
-
-                                    return params;
-                                } catch (err) {
-                                    return new Error('Something went wrong')
-                                }
-                            }, [category, canEdit]
-                        )
-                    }
-                    onProcessRowUpdateError={
-                        useCallback(
-                            (error) => {
-                                if (error) {
-                                    console.log(error)
+                                if (response.ok) {
                                     setSnackbar({
                                         open: true,
-                                        message: `Error updating ${category}, try again with correct inputs!`,
-                                        type: 'error'
+                                        message: `${category} updated successfully`,
+                                        type: 'success'
                                     })
+                                } else {
+                                    return new Promise.reject('Something went wrong');
                                 }
-                            },
-                            [category]
-                        )
+
+                                return params;
+                            } catch (err) {
+                                return new Promise.reject('Something went wrong');
+                            }
+                        }
+                    }
+                    onProcessRowUpdateError={
+                        (e) => {
+                            console.error('update failed: ', e);
+                            setSnackbar({
+                                open: true,
+                                message: `Error updating ${category}, try again with correct inputs!`,
+                                type: 'error'
+                            })
+                        }
                     }
                 />
             </Box>
@@ -387,6 +396,18 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                             key={key}
                             fullWidth
                             value={`${category}`}
+                        />
+                    }
+                    if (item.type === 'date') {
+                        return <TextField
+                            type="date"
+                            sx={{ display: 'block', margin: '1rem 0' }}
+                            label={item.headerName}
+                            // placeholder={placeholders[item.field]}
+                            defaultValue={new Date().toISOString().slice(0, 10).toString()}
+                            key={key}
+                            fullWidth
+                            onChange={(e) => handleChangeInput(item.field, e.target.value)}
                         />
                     }
                     return <TextField
@@ -433,8 +454,8 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     )
 
     const toast = (
-        <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleSnackbarClose}>
-            <Alert onClose={handleSnackbarClose} severity={snackbar.type} sx={{ width: '100%', fontWeight: 'bold', color: 'darkslateblue' }}>
+        <Snackbar open={snackbar.open} autoHideDuration={2000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity={snackbar.type} sx={{ width: '100%', fontWeight: 'bold' }}>
                 {snackbar.message}
             </Alert>
         </Snackbar>

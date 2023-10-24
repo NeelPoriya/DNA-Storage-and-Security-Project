@@ -142,7 +142,7 @@ export const getPendingRequests = async (req, res) => {
         const { email } = await getToken({ req });
         const user = await User.findOne({ email });
 
-        if (!user.superAdmin) {
+        if (!user.role === 'admin') {
             return res.status(401).json({ msg: 'Unauthorized' });
         }
 

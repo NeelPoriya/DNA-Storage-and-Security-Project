@@ -20,13 +20,6 @@ const userSchema = new Schema({
         default: "user",
     },
     /*
-    * superAdmin: an admin who can add other admins
-    */
-    superAdmin: {
-        type: Types.Boolean,
-        default: false,
-    },
-    /*
     * userStatus: defines the current status of the user for making updates to the database
     */
     userStatus: {
