@@ -65,7 +65,7 @@ const placeholders = {
 export default function ModifiedTable({ data, columns, category, setFetchAgain }) {
 
     // provides the session object to the client
-    const { data: session } = useSession();
+    let session = useSession();
 
     // switch for add-item dialog box
     const [accessDialogOpen, setAccessDialogOpen] = useState(false);
@@ -98,6 +98,12 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     const fetchUserDetails = async () => {
         const response = await fetch('/api/user');
+        if (!response.ok) {
+            setCanEdit(false);
+            setUserStatus('none');
+            return;
+        }
+
         const user = await response.json();
 
         setCanEdit(
@@ -216,13 +222,14 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     }
 
     const progress = (
-        <Box width={'100%'} height={'calc(100vh - 3rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            <CircularProgress />
+        <Box width={'100%'} height={'calc(100vh - 4rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+            <CircularProgress color="inherit" />
         </Box>
     );
 
     function CustomToolbar() {
         const apiRef = useGridApiContext();
+        if (!session || !session.data) return;
 
         const handleDeleteItems = async () => {
             setDeleteLoading(true);
@@ -284,7 +291,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
             <GridToolbarContainer>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end', gap: '.5rem' }}>
                     <LoadingButton
-                        variant='outlined'
+                        variant='text'
                         loading={addLoading}
                         onClick={() => handleClickOpen()}
                         disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
@@ -309,9 +316,9 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
 
     const dataGrid = (
-        <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
+        <Box display={'flex'} marginTop={2} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} >
             {/* {addButton} */}
-            <Box width={'100%'} height={'calc(100vh - 3rem)'}>
+            <Box width={'100%'} padding={0} sx={{ background: 'transparent', zIndex: '2', backdropFilter: 'saturate(180%) blur(30px)' }} height={'calc(100vh - 6rem)'} borderRadius={'1rem'} >
                 <StripedDataGrid
                     rows={data}
                     columns={columns}
@@ -322,9 +329,15 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                             },
                         },
                     }}
+                    style={{
+                        borderRadius: '1rem',
+                        background: 'rgba(251, 251, 251, 0.7)',
+                    }}
                     pageSizeOptions={[canEdit ? 11 : 12, 25, 50]}
                     getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}
-                    sx={{ flexGrow: '1' }}
+                    sx={{
+                        flexGrow: '1'
+                    }}
                     slots={{
                         toolbar: CustomToolbar,
                     }}

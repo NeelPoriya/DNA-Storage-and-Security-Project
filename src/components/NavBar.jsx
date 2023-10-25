@@ -156,7 +156,7 @@ const NavBar = () => {
         </Button>;
 
     return (
-        <AppBar position={'sticky'} >
+        <AppBar position={'sticky'} sx={{ background: 'rgba(251,251,253,0.65)', color: 'black', zIndex: '2', backdropFilter: 'saturate(180%) blur(20px)', borderRadius: '1rem' }} elevation={0}>
             <Toolbar variant="dense">
                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setToggleDrawer(true)}>
                     <IoMenu />
@@ -167,22 +167,41 @@ const NavBar = () => {
                 {userProfile}
             </Toolbar>
             <Drawer
+                elevation={0}
                 anchor={'left'}
                 open={toggleDrawer}
                 onClose={() => setToggleDrawer(false)}
-            >
-                <Box sx={{ width: 250 }} role="presentation">
-                    <List>
+                PaperProps={{
+                    sx: {
+                        background: 'transparent',
+                    }
+                }}
 
+            >
+                <Box sx={{
+                    width: 300,
+                    background: 'white',
+                    borderRadius: '1rem',
+                    overflowY: 'scroll',
+                    margin: '1rem',
+                    background: '#E3EAF5',
+                }}
+                    role="presentation">
+                    <List>
                         {navigationItems.map((item, idx) => (
                             <ListItem key={idx}>
                                 <Link href={item.href} style={{ width: '100%' }}>
-                                    <ListItemButton onClick={() => { setToggleDrawer(false) }} >
+                                    <ListItemButton sx={{
+                                        borderRadius: '1rem',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(0,0,0,0.1)',
+                                        },
+                                    }} onClick={() => { setToggleDrawer(false) }} >
                                         <ListItemIcon sx={{ color: 'black' }}>
                                             {item.icon}
                                         </ListItemIcon>
                                         <ListItemText >
-                                            {item.text}
+                                            <Typography variant='caption'>{item.text}</Typography>
                                         </ListItemText>
                                     </ListItemButton>
                                 </Link>

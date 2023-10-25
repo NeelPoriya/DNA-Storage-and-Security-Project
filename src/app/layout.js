@@ -5,6 +5,7 @@ import './globals.css'
 import { Inter, Raleway } from 'next/font/google'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { SessionProvider } from 'next-auth/react';
+import { Box } from '@mui/material';
 
 const inter = Inter({ subsets: ['latin'] })
 const raleway = Raleway({ subsets: ['latin'] })
@@ -21,10 +22,16 @@ export default function RootLayout({ children }) {
       <ThemeProvider theme={theme}>
         <html lang="en">
           <body className={`${inter.className} ${raleway.className}`}>
-            <div className={styles['page']}>
+            <Box sx={{
+              // backgroundColor: '#8EC5FC',
+              // backgroundImage: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
+              backgroundColor: '#E3EAF5',
+              // backgroundImage: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
+            }}
+              padding={2}>
               <NavBar />
               {children}
-            </div>
+            </Box>
           </body>
         </html>
       </ThemeProvider>

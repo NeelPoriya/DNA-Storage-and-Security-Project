@@ -46,7 +46,11 @@ export const getUser = async (req, res) => {
 
 export const getUserFromSession = async (req, res) => {
     try {
-        const { email } = await getToken({ req });
+        const token = await getToken({ req });
+        if (!token) {
+            return res.status(401).json({ msg: "Unauthorized" });
+        }
+        const { email } = token;
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ msg: "User Not Found" })
