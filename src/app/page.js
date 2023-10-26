@@ -186,7 +186,7 @@ const Home = () => {
       href: '/books',
       title: 'Total Books',
       value: books.length,
-      color: '#EE5A24',
+      color: '#1289A7',
       icon: <FaBookOpen />
     },
   ];
@@ -257,7 +257,7 @@ const Home = () => {
   return (
     <>
       {papers.length === 0 &&
-        <Box sx={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 'calc( 100vh - 4rem )' }}>
+        <Box sx={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 'calc( 100vh - 5rem )' }}>
           <CircularProgress color="inherit" />
         </Box>
       }

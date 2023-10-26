@@ -1,7 +1,7 @@
 'use client'
 
-import { AppBar, Avatar, Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
-import { IoMenu } from 'react-icons/io5';
+import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { IoHome, IoMenu } from 'react-icons/io5';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { GiReceiveMoney } from 'react-icons/gi';
@@ -13,8 +13,10 @@ import { GoGoal } from 'react-icons/go';
 import { MdArticle } from 'react-icons/md';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import NotificationDialog from './NotificationDialog';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
-const navigationIconsSize = '1.25rem';
+const navigationIconsSize = '1.1rem';
 
 const navigationItems = [
     {
@@ -80,6 +82,8 @@ const navigationItems = [
 ]
 
 const NavBar = () => {
+    const pathname = usePathname();
+
     const { data: session } = useSession();
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -141,7 +145,6 @@ const NavBar = () => {
                 {user && user.role === 'admin' &&
                     <MenuItem key='Notifications' onClick={handleNavigationMenu}>
                         <Typography textAlign="center">Notifications</Typography>
-
                     </MenuItem>
                 }
                 <MenuItem key='Logout' onClick={() => signOut()}>
@@ -162,9 +165,12 @@ const NavBar = () => {
                     <IoMenu />
                 </IconButton>
                 <Typography variant="h6" color="inherit" component="div" sx={{ flexGrow: '1' }}>
-                    <Link href="/">DNA Resource Page</Link>
+                    <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+                        <Image src={'/android-chrome-512x512.png'} width={512} height={512} alt={'DNA Resource Page'} style={{ width: '30px', height: '30px' }} />
+                        <Typography variant='h6' marginLeft={1}>DNA Resource Page</Typography>
+                    </Link>
                 </Typography>
-                {userProfile}
+                {session === undefined ? '' : userProfile}
             </Toolbar>
             <Drawer
                 elevation={0}
@@ -181,27 +187,72 @@ const NavBar = () => {
                 <Box sx={{
                     width: 300,
                     background: 'white',
+                    // style one 
                     borderRadius: '1rem',
-                    overflowY: 'scroll',
                     margin: '1rem',
+
+                    overflowY: 'scroll',
+
+                    // style two
+                    // borderBottomRightRadius: '1rem',
+                    // borderTopRightRadius: '1rem',
+                    // margin: '1rem',
+                    // marginLeft: '0',
+
                     background: '#E3EAF5',
+                    height: '100%'
                 }}
                     role="presentation">
                     <List>
+                        <Divider sx={{ marginTop: '1rem' }} textAlign='left'>HOME</Divider>
+                        <ListItem disablePadding>
+                            <Link href={'/'} style={{ width: '100%' }}>
+                                <ListItemButton sx={{
+                                    borderRadius: '.5rem',
+                                    padding: '.1rem',
+                                    paddingLeft: '1rem',
+                                    margin: '0.2rem 0.5rem',
+                                    backgroundColor: pathname === '/' ? 'rgba(0,0,0,0.1)' : 'transparent',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(0,0,0,0.1)',
+                                    },
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-start',
+                                }} onClick={() => { setToggleDrawer(false) }} >
+                                    <ListItemIcon sx={{ color: 'black', minWidth: '0', paddingRight: '1rem' }}>
+                                        <IoHome />
+                                    </ListItemIcon>
+                                    <ListItemText sx={{ flexGrow: '1' }}>
+                                        <Typography variant='button' fontSize={'.8rem'}>{'Dashboard'}</Typography>
+                                    </ListItemText>
+                                </ListItemButton>
+                            </Link>
+                        </ListItem>
+                        <Divider sx={{ marginTop: '1rem' }} textAlign='left'>CATEGORIES</Divider>
                         {navigationItems.map((item, idx) => (
-                            <ListItem key={idx}>
+                            <ListItem key={idx} disablePadding>
                                 <Link href={item.href} style={{ width: '100%' }}>
                                     <ListItemButton sx={{
-                                        borderRadius: '1rem',
+                                        borderRadius: '.5rem',
+                                        padding: '.1rem',
+                                        paddingLeft: '1rem',
+                                        margin: '0.2rem 0.5rem',
+                                        backgroundColor: pathname === item.href ? 'rgba(0,0,0,0.1)' : 'transparent',
                                         '&:hover': {
                                             backgroundColor: 'rgba(0,0,0,0.1)',
                                         },
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexDirection: 'row',
+                                        justifyContent: 'flex-start',
                                     }} onClick={() => { setToggleDrawer(false) }} >
-                                        <ListItemIcon sx={{ color: 'black' }}>
+                                        <ListItemIcon sx={{ color: 'black', minWidth: '0', paddingRight: '1rem' }}>
                                             {item.icon}
                                         </ListItemIcon>
-                                        <ListItemText >
-                                            <Typography variant='caption'>{item.text}</Typography>
+                                        <ListItemText sx={{ flexGrow: '1' }}>
+                                            <Typography variant='button' fontSize={'.8rem'}>{item.text}</Typography>
                                         </ListItemText>
                                     </ListItemButton>
                                 </Link>

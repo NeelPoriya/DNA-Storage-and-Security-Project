@@ -222,7 +222,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
     }
 
     const progress = (
-        <Box width={'100%'} height={'calc(100vh - 4rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Box width={'100%'} height={'calc(100vh - 5rem)'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
             <CircularProgress color="inherit" />
         </Box>
     );
