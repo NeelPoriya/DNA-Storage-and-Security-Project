@@ -120,7 +120,7 @@ const NavBar = () => {
     };
 
     const userProfile = session ?
-        <Box sx={{ flexGrow: '0' }}>
+        <Box sx={{ flexGrow: '0', scale: '.8' }}>
             <Tooltip title={session.user.name}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="User Image" src={session.user.image} />
