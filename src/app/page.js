@@ -199,7 +199,7 @@ const Home = () => {
         {
           gridData.map(
             (item, index) =>
-              <Grid key={index} item xs={cardSpacing} sx={{ margin: `0 ${sm ? '2rem' : '0'}` }}>
+              <Grid key={index} item xs={cardSpacing}>
                 <Link style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }} href={item.href}>
                   {Item(item.title, item.value, item.color, item.icon)}
                 </Link>
