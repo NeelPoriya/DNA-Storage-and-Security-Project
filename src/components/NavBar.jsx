@@ -180,6 +180,9 @@ const NavBar = () => {
                 PaperProps={{
                     sx: {
                         background: 'transparent',
+                        '&::-webkit-scrollbar': {
+                            display: 'none'
+                        },
                     }
                 }}
 

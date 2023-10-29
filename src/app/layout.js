@@ -37,13 +37,14 @@ export default function RootLayout({ children }) {
           }
         </title>
         <html lang="en">
-          <body className={`${inter.className} ${raleway.className}`}>
-            <Box sx={{
-              // backgroundColor: '#8EC5FC',
-              // backgroundImage: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
-              backgroundColor: '#E3EAF5',
-              // backgroundImage: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
-            }}
+          <body className={`${inter.className} ${raleway.className}`} style={{
+            backgroundColor: '#E3EAF5',
+            // backgroundColor: '#8EC5FC',
+            // backgroundImage: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
+            // backgroundColor: '#E3EAF5',
+            // backgroundImage: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
+          }}>
+            <Box
               padding={2}>
               <NavBar />
               {children}

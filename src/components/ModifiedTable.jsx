@@ -167,12 +167,13 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     const requestAccess = async () => {
         setRequestLoading(true);
+        console.log(session)
         const response = await fetch('/api/users/requestEdit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: session.user.email })
+            body: JSON.stringify({ email: session.data.user.email })
         });
 
         if (response.status === 200) {
@@ -294,7 +295,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                         variant='text'
                         loading={addLoading}
                         onClick={() => handleClickOpen()}
-                        disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
+                        disabled={!(session && session.data.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
                         <AiOutlinePlus style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                         Add New
@@ -304,7 +305,7 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
                         variant='text'
                         loading={deleteLoading}
                         onClick={() => handleDeleteItems()}
-                        disabled={!(session && session.user !== null) || (canEdit === undefined || userStatus === undefined)}
+                        disabled={!(session && session.data.user !== null) || (canEdit === undefined || userStatus === undefined)}
                     >
                         <MdDelete style={{ fontSize: '1.2rem', marginRight: '.5rem' }} />
                         Delete item/s
