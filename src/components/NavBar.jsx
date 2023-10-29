@@ -180,9 +180,7 @@ const NavBar = () => {
                 PaperProps={{
                     sx: {
                         background: 'transparent',
-                        '&::-webkit-scrollbar': {
-                            display: 'none'
-                        },
+
                     }
                 }}
 
@@ -195,6 +193,9 @@ const NavBar = () => {
                     margin: '1rem',
 
                     overflowY: 'scroll',
+                    '&::-webkit-scrollbar': {
+                        display: 'none'
+                    },
 
                     // style two
                     // borderBottomRightRadius: '1rem',
