@@ -11,48 +11,6 @@ import { GoGoal } from "react-icons/go";
 import { ImBlogger } from "react-icons/im";
 import { MdArticle } from "react-icons/md";
 
-const Item = (title, value, color, icon) => {
-  return (
-    <Card elevation={0} sx={{ borderRadius: '1rem', backgroundColor: color + '22', width: '100%', height: '100%', display: 'flex', alignItems: 'center', border: '2px solid ' + color + '33' }} >
-      <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-        <Box sx={{ display: 'flex', flexDirection: "column" }}>
-          <Typography variant="body1" fontWeight={'600'} marginTop={.5} component='div'>
-            {title}
-          </Typography>
-          <Typography variant="h4" fontWeight={'bold'} >
-            {value}
-          </Typography>
-        </Box>
-        <Typography sx={{ fontSize: '2rem', borderRadius: '50%', paddingRight: '1rem', display: 'flex', color: color }} variant="h6" component="div">
-          {icon}
-        </Typography>
-      </CardContent>
-    </Card>
-  )
-}
-
-const extractSourceFrequencyArrayFromPapersArray = (papers) => {
-  const sourceFrequency = {};
-
-  papers.forEach((paper) => {
-    if (sourceFrequency[paper['source']] === undefined) {
-      sourceFrequency[paper['source']] = 1;
-    } else {
-      sourceFrequency[paper['source']] += 1;
-    }
-  });
-
-  const sources = [];
-  const frequencies = [];
-
-  for (const [key, value] of Object.entries(sourceFrequency)) {
-    sources.push(key);
-    frequencies.push(value);
-  }
-
-  return [sources, frequencies];
-}
-
 const Home = () => {
   const lg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const md = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -103,7 +61,156 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const gridData = [
+  const gridData = GetGridData(papers, blogs, companies, grants, patents, tools, courses, events, videos, projects, softwares, books);
+
+  const grid = GetStatsCards(gridData, cardSpacing);
+
+  const papersGraph = ResearchPaperOrgsChart(papers);
+
+  console.log(ExtractResearchPapersFrequency(papers), ExtractYearsFromPapers(papers))
+
+  const researchPaperYearGraph = GetResearchPaperYearGraph(papers);
+
+  return (
+    <>
+      {papers.length === 0 &&
+        <Box sx={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 'calc( 100vh - 5rem )' }}>
+          <CircularProgress color="inherit" />
+        </Box>
+      }
+      <Box>
+        {papers.length !== 0 && grid}
+        <Grid container spacing={2}>
+          {papers.length !== 0 &&
+            <>
+              <Grid item xs={chartSpacing}>
+                {papersGraph}
+              </Grid>
+              <Grid item xs={chartSpacing}>
+                {researchPaperYearGraph}
+              </Grid>
+            </>
+          }
+        </Grid>
+      </Box>
+    </>
+  )
+}
+
+export default Home
+
+
+const Item = (title, value, color, icon) => {
+  return (
+    <Card elevation={0} sx={{ borderRadius: '1rem', backgroundColor: color + '22', width: '100%', height: '100%', display: 'flex', alignItems: 'center', border: '2px solid ' + color + '33' }} >
+      <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: "column" }}>
+          <Typography variant="body1" fontWeight={'600'} marginTop={.5} component='div'>
+            {title}
+          </Typography>
+          <Typography variant="h4" fontWeight={'bold'} >
+            {value}
+          </Typography>
+        </Box>
+        <Typography sx={{ fontSize: '2rem', borderRadius: '50%', paddingRight: '1rem', display: 'flex', color: color }} variant="h6" component="div">
+          {icon}
+        </Typography>
+      </CardContent>
+    </Card>
+  )
+}
+
+const extractSourceFrequencyArrayFromPapersArray = (papers) => {
+  const sourceFrequency = {};
+
+  papers.forEach((paper) => {
+    if (sourceFrequency[paper['source']] === undefined) {
+      sourceFrequency[paper['source']] = 1;
+    } else {
+      sourceFrequency[paper['source']] += 1;
+    }
+  });
+
+  const sources = [];
+  const frequencies = [];
+
+  for (const [key, value] of Object.entries(sourceFrequency)) {
+    sources.push(key);
+    frequencies.push(value);
+  }
+
+  return [sources, frequencies];
+}
+
+function GetResearchPaperYearGraph(papers) {
+  const chartOptions = {
+    series: [{
+      name: 'Number of Research Paper published',
+      data: [...ExtractResearchPapersFrequency(papers)]
+    }],
+    options: {
+      chart: {
+        height: 350,
+        type: 'area'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'date',
+        categories: [...ExtractYearsFromPapers(papers)],
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          dataLabels: {
+            position: 'top', // top, center, bottom
+          },
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val;
+        },
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          fontWeight: 'regular',
+          colors: ["#000"]
+        }
+      },
+    },
+  };
+
+  const researchPaperYearGraph = <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
+    <Typography variant="h6">Research Papers Published Years</Typography>
+    <ApexChart options={chartOptions.options} series={chartOptions.series} type="bar" height={367} />
+  </Card>;
+  return researchPaperYearGraph;
+}
+
+function GetStatsCards(gridData, cardSpacing) {
+  return <Box padding={2} marginTop={2} sx={{ background: 'rgba(251, 251, 251, .7)', borderRadius: '1rem' }}>
+    <Typography variant="h6" marginBottom={1} marginLeft={1}>Statistics</Typography>
+    <Grid container spacing={2}>
+
+      {gridData.map(
+        (item, index) => <Grid key={index} item xs={cardSpacing}>
+          <Link style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }} href={item.href}>
+            {Item(item.title, item.value, item.color, item.icon)}
+          </Link>
+        </Grid>
+      )}
+    </Grid>
+  </Box>;
+}
+
+function GetGridData(papers, blogs, companies, grants, patents, tools, courses, events, videos, projects, softwares, books) {
+  return [
     {
       href: '/research-papers',
       title: 'Total Research Papers',
@@ -189,26 +296,9 @@ const Home = () => {
       icon: <FaBookOpen />
     },
   ];
+}
 
-  const grid = (
-    <Box padding={2} marginTop={2} sx={{ background: 'rgba(251, 251, 251, .7)', borderRadius: '1rem' }}>
-      <Typography variant="h6" marginBottom={1} marginLeft={1}>Statistics</Typography>
-      <Grid container spacing={2} >
-
-        {
-          gridData.map(
-            (item, index) =>
-              <Grid key={index} item xs={cardSpacing}>
-                <Link style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }} href={item.href}>
-                  {Item(item.title, item.value, item.color, item.icon)}
-                </Link>
-              </Grid>
-          )
-        }
-      </Grid>
-    </Box>
-  );
-
+function ResearchPaperOrgsChart(papers) {
   const chartProps = {
     options: {
       chart: {
@@ -229,7 +319,7 @@ const Home = () => {
       },
       legend: {
         formatter: function (val, opts) {
-          return extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex] + ' - ' + extractSourceFrequencyArrayFromPapersArray(papers)[1][opts.seriesIndex]
+          return extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex] + ' - ' + extractSourceFrequencyArrayFromPapersArray(papers)[1][opts.seriesIndex];
         }
       },
       responsive: [{
@@ -252,25 +342,36 @@ const Home = () => {
       <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
     </Card>
   );
-
-  return (
-    <>
-      {papers.length === 0 &&
-        <Box sx={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 'calc( 100vh - 5rem )' }}>
-          <CircularProgress color="inherit" />
-        </Box>
-      }
-      <Box>
-        {papers.length !== 0 && grid}
-        <Grid container>
-          <Grid item xs={chartSpacing}>
-            {papers.length !== 0 && papersGraph}
-          </Grid>
-        </Grid>
-      </Box>
-    </>
-  )
+  return papersGraph;
 }
 
-export default Home
+function ExtractYearsFromPapers(papers) {
+  const years = [];
+  papers.forEach((paper) => {
+    const year = new Date(paper['publishedDate']).getFullYear();
+    if (!years.includes(year)) {
+      years.push(year);
+    }
+  });
+  // sort the years
+  years.sort((a, b) => a - b);
+  return years;
+}
 
+function ExtractResearchPapersFrequency(papers) {
+  const years = ExtractYearsFromPapers(papers);
+  const frequency = {};
+  years.forEach((year) => {
+    frequency[year] = 0;
+  });
+  papers.forEach((paper) => {
+    const year = new Date(paper['publishedDate']).getFullYear();
+    frequency[year] += 1;
+  });
+
+  const frequencies = [];
+  for (const [key, value] of Object.entries(frequency)) {
+    frequencies.push(value);
+  }
+  return frequencies;
+}
