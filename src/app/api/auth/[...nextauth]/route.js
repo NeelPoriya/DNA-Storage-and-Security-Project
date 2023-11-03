@@ -47,6 +47,13 @@ const handler = NextAuth({
                 return false;
             }
         }
+    },
+    pages: {
+        // signIn: "/login",
+        // signOut: "/logout",
+        // error: "/auth/error",
+        // verifyRequest: "/auth/verify-request",
+        // newUser: "/auth/new-user"
     }
 })
 
