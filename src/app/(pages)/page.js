@@ -149,6 +149,29 @@ function GetResearchPaperYearGraph(papers) {
       data: [...ExtractResearchPapersFrequency(papers)]
     }],
     options: {
+      colors: [
+        '#1289A7',
+        '#40739e',
+        '#00A4E9',
+        '#01a3a4',
+        '#686de0',
+        '#e84118',
+        '#F5912F',
+        '#F24B40',
+        '#B3C83C',
+        '#F0B63C',
+        '#74B245',
+        '#FD6191',
+        '#B237BC',
+        '#F9A109',
+        '#6ab04c',
+        '#EDDB5C',
+        '#ee5253',
+        '#f368e0',
+        '#8395a7',
+        '#EE5A24',
+        '#7FCD93',
+      ],
       chart: {
         height: 350,
         type: 'area'
@@ -314,14 +337,31 @@ function ResearchPaperOrgsChart(papers) {
       dataLabels: {
         enabled: false
       },
-      fill: {
-        type: 'gradient',
-      },
       legend: {
         formatter: function (val, opts) {
           return extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex] + ' - ' + extractSourceFrequencyArrayFromPapersArray(papers)[1][opts.seriesIndex];
         }
       },
+      colors: [
+        // '#40739e',
+        // '#686de0',
+        // '#B237BC',
+        // '#f368e0',
+        // '#00A4E9',
+        // '#1289A7',
+        '#01a3a4',
+        '#7FCD93',
+        '#74B245',
+        '#B3C83C',
+        '#EDDB5C',
+        '#F0B63C',
+        '#F5912F',
+        '#ee5253',
+        '#F24B40',
+        '#EE5A24',
+        '#e84118',
+      ],
+      labels: [...extractSourceFrequencyArrayFromPapersArray(papers)[0]],
       responsive: [{
         breakpoint: 480,
         options: {
