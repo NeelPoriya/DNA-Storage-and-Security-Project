@@ -1,5 +1,6 @@
 'use client';
 import ApexChart from "@/components/ApexChart";
+import Footer from "@/components/Footer";
 import { Box, Card, CardContent, CardHeader, CircularProgress, Grid, Typography, useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -93,6 +94,8 @@ const Home = () => {
           }
         </Grid>
       </Box>
+      {/* {papers.length !== 0 && <Footer />}  */}
+      <Footer />
     </>
   )
 }
@@ -202,6 +205,7 @@ function GetResearchPaperYearGraph(papers) {
         offsetY: -20,
         style: {
           fontSize: '12px',
+          fontFamily: 'Raleway',
           fontWeight: 'regular',
           colors: ["#000"]
         }
