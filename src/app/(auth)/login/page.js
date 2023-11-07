@@ -110,10 +110,16 @@
 // }
 "use client";
 
+import { Box, Button, Typography } from '@mui/material';
 import { signIn } from 'next-auth/react'
 import Image from 'next/image' // import the Image component from Next.js
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 export default function SignInButton() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'row',
@@ -156,7 +162,7 @@ export default function SignInButton() {
     borderTopRightRadius: '20px', // added this line
     borderBottomRightRadius: '20px', // added this line
   };
-  
+
 
   const welcomeStyle = {
     marginBottom: '2rem',
@@ -174,19 +180,23 @@ export default function SignInButton() {
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={cardStyle}>
-        <div style={leftStyle}>
+    <Box style={containerStyle}>
+      <Box style={cardStyle}>
+        <Box style={leftStyle}>
           {/* removed the img tag */}
-        </div>
-        <div style={rightStyle}>
-          <div style={welcomeStyle}>Welcome to our website</div>
-          <button style={buttonStyle} onClick={() => signIn("google")}>
+        </Box>
+        <Box style={rightStyle}>
+          <Box style={welcomeStyle}>Welcome to our website</Box>
+          <button style={buttonStyle} onClick={() =>
+            signIn('google', {
+              callbackUrl: callbackUrl,
+            })
+          }>
             <Image src="/google_logo.png" alt="Google Logo" width={24} height={24} />
-            Sign in with Google
+            <Typography>Sign in with Google</Typography>
           </button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box >
   );
 }

@@ -68,8 +68,6 @@ const Home = () => {
 
   const papersGraph = ResearchPaperOrgsChart(papers);
 
-  console.log(ExtractResearchPapersFrequency(papers), ExtractYearsFromPapers(papers))
-
   const researchPaperYearGraph = GetResearchPaperYearGraph(papers);
 
   return (

@@ -167,7 +167,6 @@ export default function ModifiedTable({ data, columns, category, setFetchAgain }
 
     const requestAccess = async () => {
         setRequestLoading(true);
-        console.log(session)
         const response = await fetch('/api/users/requestEdit', {
             method: 'POST',
             headers: {

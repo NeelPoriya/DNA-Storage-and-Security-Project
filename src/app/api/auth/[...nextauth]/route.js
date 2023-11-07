@@ -27,7 +27,6 @@ const handler = NextAuth({
             return token;
         },
         async signIn({ profile }) {
-            console.log(profile);
 
             try {
                 await connectDB();
@@ -49,7 +48,7 @@ const handler = NextAuth({
         }
     },
     pages: {
-        //signIn: "/login",
+        signIn: "/login",
         // signOut: "/logout",
         // error: "/auth/error",
         // verifyRequest: "/auth/verify-request",
