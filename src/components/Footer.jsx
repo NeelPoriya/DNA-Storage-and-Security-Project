@@ -1,4 +1,4 @@
-import { BottomNavigation, Box, Divider, List, ListItem, Typography } from '@mui/material'
+import { BottomNavigation, Box, Divider, List, ListItem, Typography, useMediaQuery } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -11,26 +11,35 @@ const developers = [
     },
     {
         name: 'Vrutik Prajapati',
+        profile: 'vrutik2809',
     },
     {
         name: 'Kishan Sangani',
+        profile: 'kishan1265'
     },
     {
         name: 'Harsh Patel',
+        profile: 'Harshpatel2910'
     },
     {
         name: 'Darshan Kheni',
+        profile: 'darshankheni'
     },
     {
-        name: 'Achyut Shah'
+        name: 'Achyut Shah',
+        profile: 'Achyut-1412'
     },
     {
-        name: 'Param Mistry'
+        name: 'Param Mistry',
+        profile: 'parammistry'
     }
 ]
 
 const Footer = () => {
-    const numberOfDevelopersColumns = 3;
+    const lg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    const md = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const sm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const numberOfDevelopersColumns = sm ? 1 : md ? 2 : lg ? 3 : 3;
 
     return (
         <Box marginTop={2}>
@@ -47,12 +56,15 @@ const Footer = () => {
                     backgroundColor: 'rgba(251, 251, 251, .7)',
                     width: '100%',
                     display: 'flex',
+                    flexWrap: 'wrap',
                     borderRadius: '1rem',
                     marginTop: '1rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '1rem'
+                    padding: '1rem',
+                    gap: '1rem',
+
                 }}
             >
                 {/* Logo Column */}
@@ -62,14 +74,20 @@ const Footer = () => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         marginLeft: '1rem',
-                        flexGrow: '.5',
+                        // flexGrow: '.5',
                         userSelect: 'none',
                     }}
                 >
                     <Image src={'/gupta-lab-logo.png'} width={75} height={75} alt='Gupta Lab Logo' />
-                    <Typography variant='h4' sx={{ textTransform: 'uppercase', marginTop: '2rem' }}>
-                        GuptaLab
-                    </Typography>
+                    <Link href={'https://guptalab.org'}>
+                        <Typography variant='h4' fontWeight={'600'} sx={{
+                            textTransform: 'uppercase', marginTop: '2rem', '&:hover': {
+                                color: 'primary.main'
+                            }
+                        }}>
+                            GuptaLab
+                        </Typography>
+                    </Link>
                     <Typography variant='body1' sx={{ marginTop: '1rem' }}>
                         Laboratory of Natural Information Processing
                     </Typography>
@@ -81,10 +99,10 @@ const Footer = () => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         marginLeft: '1rem',
-                        flexGrow: '1',
+                        // flexGrow: '1',
                     }}
                 >
-                    <Typography variant='h5' sx={{ userSelect: 'none' }}>
+                    <Typography variant='h5' fontWeight={'600'} sx={{ userSelect: 'none' }}>
                         Team
                     </Typography>
                     <Box
@@ -99,7 +117,7 @@ const Footer = () => {
                                         <ListItem key={index}>
                                             <Link
 
-                                                href={`https://google.com/search?q=who+the+fuck+is+${developer.name.split(' ').join('+')}`} target='blank'>
+                                                href={`https://github.com/${developer.profile}`} target='blank'>
                                                 <Typography sx={{
                                                     '&:hover': {
                                                         color: '#aaa'
@@ -121,10 +139,10 @@ const Footer = () => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         marginLeft: '1rem',
-                        flexGrow: '.5'
+                        // flexGrow: '.5'
                     }}
                 >
-                    <Typography variant='h5' sx={{ userSelect: 'none' }}>
+                    <Typography variant='h5' fontWeight={'600'} sx={{ userSelect: 'none' }}>
                         Social
                     </Typography>
                     <Box sx={{ display: 'flex' }}>
