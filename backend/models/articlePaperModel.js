@@ -10,11 +10,11 @@ const articlePaperSchema = new Schema({
 
     title: {
         type: Types.String,
-        required: true
+        default: "title"
     },
     topics: {
         type: [Types.String],
-        required: true
+        default: []
     },
     type: {
         type: Types.String,
@@ -23,19 +23,19 @@ const articlePaperSchema = new Schema({
     },
     authors: {
         type: [Types.String],
-        required: true
+        default: []
     },
     publishedDate: {
         type: Types.Date,
-        required: true
+        default: Date.now()
     },
     source: {
         type: Types.String,
-        required: true
+        default: "unknown"
     },
     link: {
         type: Types.String,
-        required: true
+        default: ""
     }
 
 

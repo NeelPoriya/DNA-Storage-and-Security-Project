@@ -1,19 +1,22 @@
 import connectDB from "../index"
-import Company from "../models/companyModel"
-import { data } from "@data/companies"
+import Paper from "../models/articlePaperModel"
+import { data } from "@data/test"
 
 export const addData = async () => {
     try {
         await connectDB()
         const insertData = data.map((item) => {
             return {
-                organization: item["Organization"],
-                logoPath: item["path"],
-                type: "Company",
-                description: item["Description"]
+                title: item["Title"],
+                topics: item["Topics"].trim().split(","),
+                type: "Articles And Papers",
+                authors: item["Authors"].trim().split(","),
+                publishedDate: item["Publication Date"],
+                source: item["Source"],
+                link: item["Link"]
             }
         })
-        await Company.insertMany(insertData)
+        await Paper.insertMany(insertData)
     } catch (error) {
         throw error
     }
