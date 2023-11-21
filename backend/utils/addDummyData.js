@@ -1,5 +1,5 @@
-import connectDB from "./index"
-import Company from "./models/companyModel"
+import connectDB from "../index"
+import Company from "../models/companyModel"
 import { data } from "@data/companies"
 
 export const addData = async () => {
