@@ -13,12 +13,13 @@ import { ImBlogger } from "react-icons/im";
 import { MdArticle } from "react-icons/md";
 
 const Home = () => {
+  const xl = useMediaQuery((theme) => theme.breakpoints.down('xl'));
   const lg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const md = useMediaQuery((theme) => theme.breakpoints.down('md'));
   const sm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const cardSpacing = sm ? 12 : md ? 6 : lg ? 4 : 3;
-  const chartSpacing = sm ? 12 : md ? 12 : lg ? 12 : 6;
+  const chartSpacing = sm ? 12 : md ? 12 : lg ? 12 : xl ? 12 : 6;
 
   const [data, setData] = useState({
     articlePapers: [],
@@ -309,7 +310,7 @@ function ResearchPaperOrgsChart(papers) {
   };
 
   const papersGraph = (
-    <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
+    <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)', }}>
       <Typography variant="h6"><b>Top 10</b> Sources in Research Papers & Articles</Typography>
       <ApexChart options={chartProps.options} series={frequencies} type="donut" height={380} />
     </Card>
@@ -388,10 +389,14 @@ function GetResearchPaperYearGraph(papers) {
     },
   };
 
-  const researchPaperYearGraph = <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
-    <Typography variant="h6"><b>Most Research Papers</b> published Years</Typography>
-    <ApexChart options={chartOptions.options} series={chartOptions.series} type="bar" height={367} />
-  </Card>;
+  const lessHeight = useMediaQuery(theme => theme.breakpoints.between('1440', '1600'));
+  const height = lessHeight ? 300 : 367;
+
+  const researchPaperYearGraph =
+    <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
+      <Typography variant="h6"><b>Most Research Papers</b> published Years</Typography>
+      <ApexChart options={chartOptions.options} series={chartOptions.series} type="bar" height={height} />
+    </Card>;
   return researchPaperYearGraph;
 }
 
