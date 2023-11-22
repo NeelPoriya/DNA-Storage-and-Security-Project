@@ -88,9 +88,14 @@ const Footer = () => {
                             GuptaLab
                         </Typography>
                     </Link>
-                    <Typography variant='body1' sx={{ marginTop: '1rem' }}>
-                        Laboratory of Natural Information Processing
-                    </Typography>
+                    <Box sx={{ marginTop: '1rem' }}>
+                        <Typography variant='body1'>
+                            Laboratory of Natural Information Processing
+                        </Typography>
+                        <Typography>
+                            <b>Contact</b>: <Link target='blank' href={`mailto:dnaresourcepage@guptalab.org`}>dnaresourcepage@guptalab.org</Link>
+                        </Typography>
+                    </Box>
                 </Box>
                 {/* Team Column */}
                 <Box

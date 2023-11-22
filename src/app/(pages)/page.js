@@ -20,18 +20,20 @@ const Home = () => {
   const cardSpacing = sm ? 12 : md ? 6 : lg ? 4 : 3;
   const chartSpacing = sm ? 12 : md ? 12 : lg ? 12 : 6;
 
-  const [books, setBooks] = useState([]);
-  const [blogs, setBlogs] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [patents, setPatents] = useState([]);
-  const [papers, setPapers] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const [tools, setTools] = useState([]);
-  const [videos, setVideos] = useState([]);
-  const [grants, setGrants] = useState([]);
-  const [softwares, setSoftwares] = useState([]);
+  const [data, setData] = useState({
+    articlePapers: [],
+    blogs: [],
+    companies: [],
+    courses: [],
+    events: [],
+    grants: [],
+    patents: [],
+    projects: [],
+    simulationTools: [],
+    youtubeContents: [],
+    softwares: [],
+    books: []
+  });
 
   async function fetchData() {
 
@@ -40,18 +42,7 @@ const Home = () => {
 
       const jsonData = await responses.json();
 
-      setPapers(jsonData.articlePapers);
-      setBlogs(jsonData.blogs);
-      setCompanies(jsonData.companies);
-      setCourses(jsonData.courses);
-      setEvents(jsonData.events);
-      setGrants(jsonData.grants);
-      setPatents(jsonData.patents);
-      setProjects(jsonData.projects);
-      setTools(jsonData.simulationTools);
-      setVideos(jsonData.youtubeContents);
-      setSoftwares(jsonData.softwares);
-      setBooks(jsonData.books);
+      setData(jsonData);
 
     } catch (e) {
       console.log(e);
@@ -62,25 +53,29 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const gridData = GetGridData(papers, blogs, companies, grants, patents, tools, courses, events, videos, projects, softwares, books);
+  const gridData = GetGridData(data.articlePapers, data.blogs, data.companies, data.grants, data.patents, data.simulationTools, data.courses, data.events, data.youtubeContents, data.projects, data.softwares, data.books);
 
   const grid = GetStatsCards(gridData, cardSpacing);
 
-  const papersGraph = ResearchPaperOrgsChart(papers);
+  const papersGraph = ResearchPaperOrgsChart(data.articlePapers);
 
-  const researchPaperYearGraph = GetResearchPaperYearGraph(papers);
+  const researchPaperYearGraph = GetResearchPaperYearGraph(data.articlePapers);
 
   return (
     <>
-      {papers.length === 0 &&
+      {data.articlePapers.length === 0 &&
         <Box sx={{ background: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: 'calc( 100vh - 5rem )' }}>
           <CircularProgress color="inherit" />
         </Box>
       }
       <Box>
-        {papers.length !== 0 && grid}
+        {
+          data.articlePapers.length !== 0 &&
+          grid
+        }
         <Grid container spacing={2}>
-          {papers.length !== 0 &&
+          {
+            data.articlePapers.length !== 0 &&
             <>
               <Grid item xs={chartSpacing}>
                 {papersGraph}
@@ -92,7 +87,6 @@ const Home = () => {
           }
         </Grid>
       </Box>
-      {/* {papers.length !== 0 && <Footer />}  */}
       <Footer />
     </>
   )
@@ -125,97 +119,29 @@ const extractSourceFrequencyArrayFromPapersArray = (papers) => {
   const sourceFrequency = {};
 
   papers.forEach((paper) => {
-    if (sourceFrequency[paper['source']] === undefined) {
-      sourceFrequency[paper['source']] = 1;
-    } else {
-      sourceFrequency[paper['source']] += 1;
+    if (paper['source'] !== '') {
+      if (sourceFrequency[paper['source']] === undefined) {
+        sourceFrequency[paper['source']] = 1;
+      } else {
+        sourceFrequency[paper['source']] += 1;
+      }
     }
   });
+
+  // only show top 10 sources
+  const sourceLimit = 10;
+
+  const filteredData = Object.fromEntries(Object.entries(sourceFrequency).sort(([, a], [, b]) => { return b - a; }).splice(0, sourceLimit));
 
   const sources = [];
   const frequencies = [];
 
-  for (const [key, value] of Object.entries(sourceFrequency)) {
+  for (const [key, value] of Object.entries(filteredData)) {
     sources.push(key);
     frequencies.push(value);
   }
 
   return [sources, frequencies];
-}
-
-function GetResearchPaperYearGraph(papers) {
-  const chartOptions = {
-    series: [{
-      name: 'Number of Research Paper published',
-      data: [...ExtractResearchPapersFrequency(papers)]
-    }],
-    options: {
-      colors: [
-        '#1289A7',
-        '#40739e',
-        '#00A4E9',
-        '#01a3a4',
-        '#686de0',
-        '#e84118',
-        '#F5912F',
-        '#F24B40',
-        '#B3C83C',
-        '#F0B63C',
-        '#74B245',
-        '#FD6191',
-        '#B237BC',
-        '#F9A109',
-        '#6ab04c',
-        '#EDDB5C',
-        '#ee5253',
-        '#f368e0',
-        '#8395a7',
-        '#EE5A24',
-        '#7FCD93',
-      ],
-      chart: {
-        height: 350,
-        type: 'area'
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'smooth'
-      },
-      xaxis: {
-        type: 'date',
-        categories: [...ExtractYearsFromPapers(papers)],
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 4,
-          dataLabels: {
-            position: 'top', // top, center, bottom
-          },
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val) {
-          return val;
-        },
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          fontFamily: 'Raleway',
-          fontWeight: 'regular',
-          colors: ["#000"]
-        }
-      },
-    },
-  };
-
-  const researchPaperYearGraph = <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
-    <Typography variant="h6">Research Papers Published Years</Typography>
-    <ApexChart options={chartOptions.options} series={chartOptions.series} type="bar" height={367} />
-  </Card>;
-  return researchPaperYearGraph;
 }
 
 function GetStatsCards(gridData, cardSpacing) {
@@ -324,6 +250,10 @@ function GetGridData(papers, blogs, companies, grants, patents, tools, courses, 
 }
 
 function ResearchPaperOrgsChart(papers) {
+  const chartData = extractSourceFrequencyArrayFromPapersArray(papers);
+  const sources = chartData[0];
+  const frequencies = chartData[1];
+
   const chartProps = {
     options: {
       chart: {
@@ -341,7 +271,7 @@ function ResearchPaperOrgsChart(papers) {
       },
       legend: {
         formatter: function (val, opts) {
-          return extractSourceFrequencyArrayFromPapersArray(papers)[0][opts.seriesIndex] + ' - ' + extractSourceFrequencyArrayFromPapersArray(papers)[1][opts.seriesIndex];
+          return sources[opts.seriesIndex] + ' - ' + frequencies[opts.seriesIndex];
         }
       },
       colors: [
@@ -363,7 +293,7 @@ function ResearchPaperOrgsChart(papers) {
         '#EE5A24',
         '#e84118',
       ],
-      labels: [...extractSourceFrequencyArrayFromPapersArray(papers)[0]],
+      labels: [...sources],
       responsive: [{
         breakpoint: 480,
         options: {
@@ -380,11 +310,89 @@ function ResearchPaperOrgsChart(papers) {
 
   const papersGraph = (
     <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
-      <Typography variant="h6">Research & Articles Sources</Typography>
-      <ApexChart options={chartProps.options} series={extractSourceFrequencyArrayFromPapersArray(papers)[1]} type="donut" height={380} />
+      <Typography variant="h6"><b>Top 10</b> Sources in Research Papers & Articles</Typography>
+      <ApexChart options={chartProps.options} series={frequencies} type="donut" height={380} />
     </Card>
   );
   return papersGraph;
+}
+function GetResearchPaperYearGraph(papers) {
+  const chartData = [...ExtractResearchPapersFrequency(papers)];
+  const frequencies = chartData[0];
+  const chartYears = chartData[1];
+
+  const chartOptions = {
+    series: [{
+      name: 'Number of Research Paper published',
+      data: frequencies,
+    }],
+    options: {
+      colors: [
+        '#1289A7',
+        '#40739e',
+        '#00A4E9',
+        '#01a3a4',
+        '#686de0',
+        '#e84118',
+        '#F5912F',
+        '#F24B40',
+        '#B3C83C',
+        '#F0B63C',
+        '#74B245',
+        '#FD6191',
+        '#B237BC',
+        '#F9A109',
+        '#6ab04c',
+        '#EDDB5C',
+        '#ee5253',
+        '#f368e0',
+        '#8395a7',
+        '#EE5A24',
+        '#7FCD93',
+      ],
+      chart: {
+        height: 350,
+        type: 'area'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'date',
+        categories: chartYears,
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          dataLabels: {
+            position: 'top', // top, center, bottom
+          },
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val;
+        },
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          fontFamily: 'Raleway',
+          fontWeight: 'regular',
+          colors: ["#000"]
+        }
+      },
+    },
+  };
+
+  const researchPaperYearGraph = <Card elevation={0} sx={{ marginTop: '1rem', padding: '1rem', borderRadius: '1rem', background: 'rgba(251, 251, 251, .7)' }}>
+    <Typography variant="h6"><b>Most Research Papers</b> published Years</Typography>
+    <ApexChart options={chartOptions.options} series={chartOptions.series} type="bar" height={367} />
+  </Card>;
+  return researchPaperYearGraph;
 }
 
 function ExtractYearsFromPapers(papers) {
@@ -403,17 +411,25 @@ function ExtractYearsFromPapers(papers) {
 function ExtractResearchPapersFrequency(papers) {
   const years = ExtractYearsFromPapers(papers);
   const frequency = {};
+
   years.forEach((year) => {
     frequency[year] = 0;
   });
+
   papers.forEach((paper) => {
     const year = new Date(paper['publishedDate']).getFullYear();
     frequency[year] += 1;
   });
 
+  // limit the years to only show the most research papers published in that year
+  const limitYears = 20;
+  const filteredData = Object.fromEntries(Object.entries(frequency).sort(([, a], [, b]) => b - a).splice(0, limitYears))
+
   const frequencies = [];
-  for (const [key, value] of Object.entries(frequency)) {
+  const filteredYears = [];
+  for (const [key, value] of Object.entries(filteredData)) {
     frequencies.push(value);
+    filteredYears.push(key);
   }
-  return frequencies;
+  return [frequencies, filteredYears];
 }

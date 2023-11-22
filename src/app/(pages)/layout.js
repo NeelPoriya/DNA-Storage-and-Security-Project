@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
             (pathname === '/'
               ? 'Home'
               : pathname.replace('/', '').split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' '))
-            + ' | DNA Resource Page'
+            + ' | DNA Storage Resources Page'
           }
         </title>
         <html lang="en">

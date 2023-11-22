@@ -166,8 +166,8 @@ const NavBar = () => {
                 </IconButton>
                 <Typography variant="h6" color="inherit" component="div" sx={{ flexGrow: '1' }}>
                     <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-                        <Image src={'/android-chrome-512x512.png'} width={512} height={512} alt={'DNA Resource Page'} style={{ width: '30px', height: '30px' }} />
-                        <Typography variant='h6' marginLeft={1}>DNA Resource Page</Typography>
+                        <Image src={'/gupta-lab-logo.png'} width={512} height={512} alt={'DNA Storage Resource Page'} style={{ width: '30px', height: '30px' }} />
+                        <Typography variant='h6' marginLeft={1}>DNA Storage Resources Page</Typography>
                     </Link>
                 </Typography>
                 {session === undefined ? '' : userProfile}
