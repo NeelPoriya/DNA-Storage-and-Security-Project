@@ -93,7 +93,7 @@ const Footer = () => {
                             Laboratory of Natural Information Processing
                         </Typography>
                         <Typography>
-                            <b>Contact</b>: <Link target='blank' href={`mailto:dnaresourcepage@guptalab.org`}>dnaresourcepage@guptalab.org</Link>
+                            <b>Contact</b>: <Link target='blank' href={`mailto:dnaresource@guptalab.org`}>dnaresource@guptalab.org</Link>
                         </Typography>
                     </Box>
                 </Box>
