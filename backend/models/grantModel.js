@@ -24,6 +24,14 @@ const grantSchema = new Schema({
         required: true,
         enum: resourceTypes
     },
+    startDate: {
+        type: Types.Date,
+        default: Date.now()
+    },
+    endDate: {
+        type: Types.Date,
+        default: Date.now()
+    }
 
 })
 

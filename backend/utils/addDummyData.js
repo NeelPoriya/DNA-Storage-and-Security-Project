@@ -1,6 +1,8 @@
+import Patents from "@backend/models/patentModel"
 import connectDB from "../index"
-import Paper from "../models/articlePaperModel"
-import { data } from "@data/test"
+// import Paper from "../models/articlePaperModel"
+
+import { data } from "@data/patents"
 
 export const addData = async () => {
     try {
@@ -8,15 +10,12 @@ export const addData = async () => {
         const insertData = data.map((item) => {
             return {
                 title: item["Title"],
-                topics: item["Topics"].trim().split(","),
-                type: "Articles And Papers",
-                authors: item["Authors"].trim().split(","),
-                publishedDate: item["Publication Date"],
-                source: item["Source"],
+                type: "Patent",
+                authors: item["Organization / Authors"].trim().split(","),
                 link: item["Link"]
             }
         })
-        await Paper.insertMany(insertData)
+        await Patents.insertMany(insertData)
     } catch (error) {
         throw error
     }

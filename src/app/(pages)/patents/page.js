@@ -24,7 +24,7 @@ const columns = [
         editable: true
     },
     {
-        field: 'Link',
+        field: 'link',
         headerName: 'Link',
         editable: true,
         renderCell: (params) => {

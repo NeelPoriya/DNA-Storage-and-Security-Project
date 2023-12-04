@@ -24,6 +24,20 @@ const columns = [
         editable: false
     },
     {
+        field: 'startDate',
+        headerName: 'Start Date',
+        width: 250,
+        type: 'date',
+        editable: true
+    },
+    {
+        field: 'endDate',
+        headerName: 'End Date',
+        width: 250,
+        type: 'date',
+        editable: true
+    },
+    {
         field: 'link',
         headerName: 'Link',
         editable: true,
@@ -50,7 +64,9 @@ const GrantsPage = () => {
                         style: 'currency',
                         currency: 'USD',
                     }),
-                    'id': item._id
+                    'id': item._id,
+                    'startDate': new Date(item['startDate']),
+                    'endDate': new Date(item['endDate'])
                 };
             })
 

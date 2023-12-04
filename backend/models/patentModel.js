@@ -21,10 +21,9 @@ const patentSchema = new Schema({
     },
     type: {
         type: Types.String,
-        required: true,
-        enum: resourceTypes
+        enum: resourceTypes,
+        default: 'Patent'
     },
-
 })
 
 let Patents;
