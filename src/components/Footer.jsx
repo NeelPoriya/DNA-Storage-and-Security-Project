@@ -44,6 +44,22 @@ const developers = [
   },
 ];
 
+function getCurrentDate() {
+  const months = [
+      "January", "February", "March", "April",
+      "May", "June", "July", "August",
+      "September", "October", "November", "December"
+  ];
+
+  const currentDate = new Date();
+  const monthName = months[currentDate.getMonth()];
+  const day = currentDate.getDate();
+  const year = currentDate.getFullYear();
+
+  const formattedDate = `${monthName} ${day}, ${year}`;
+  return formattedDate;
+}
+
 const Disclaimer = (
   <Box
     sx={{textAlign: 'center'}}
@@ -62,8 +78,8 @@ const Disclaimer = (
       </Typography>
     </Box>
     <Box>
-      <Typography>
-        The information provided on this website is for research purposes only.
+      <Typography sx={{'textAlign':'left'}}>
+      Disclaimer: The information provided on the webpage is for educational and research purposes. The webpage contains links to third-party website and we are not responsible for the privacy practices or content of these websites or the data that they provide. Please use it at your own risk. Last updated on {getCurrentDate()}. For any further information or suggestion you may reach to us at dnaresource@guptalab.org. We are thankful to DNA Storage Alliance (link).
       </Typography>
     </Box>
   </Box>

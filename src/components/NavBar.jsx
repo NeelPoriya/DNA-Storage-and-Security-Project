@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { FaBookOpen, FaStamp } from 'react-icons/fa';
-import { BsFillGearFill, BsFillCalendarEventFill, BsYoutube, BsBuildingsFill } from 'react-icons/bs';
+import { BsFillGearFill, BsFillCalendarEventFill, BsYoutube, BsBuildingsFill, BsFillFileEarmarkPersonFill } from 'react-icons/bs';
 import { AiFillPlayCircle, AiOutlineCloudDownload } from 'react-icons/ai';
 import { ImBlogger } from 'react-icons/im';
 import { GoGoal } from 'react-icons/go';
@@ -78,6 +78,11 @@ const navigationItems = [
         text: 'Books',
         icon: <FaBookOpen style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
         href: '/books',
+    },
+    {
+        text: 'Researchers',
+        icon: <BsFillFileEarmarkPersonFill style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
+        href: '/researchers',
     }
 ].sort((a, b) => a.text.localeCompare(b.text));
 
