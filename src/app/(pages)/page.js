@@ -248,8 +248,7 @@ function GetGridData(papers, blogs, companies, grants, patents, tools, courses, 
       icon: <FaBookOpen />
     },
   ]
-  
-  x.sort((a,b) => (a.title < b.title) ? -1 : (a.title > b.title) ? 1 : 0);
+  .sort((a, b) => a.title.localeCompare(b.title))
 
   return x;
 }

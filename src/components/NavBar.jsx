@@ -79,7 +79,7 @@ const navigationItems = [
         icon: <FaBookOpen style={{ width: navigationIconsSize, height: navigationIconsSize }} />,
         href: '/books',
     }
-]
+].sort((a, b) => a.text.localeCompare(b.text));
 
 const NavBar = () => {
     const pathname = usePathname();
